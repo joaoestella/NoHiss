@@ -145,12 +145,12 @@ function groupTones(peaks) {
   let left = [...peaks].sort((a, b) => a.freq - b.freq);
   const groups = [];
 
-  const take = (base, maxN) => {
+  const take = (base, maxN, tol = tolerance) => {
     const members = [];
     const rest = [];
     for (const p of left) {
       const m = Math.round(p.freq / base);
-      if (m >= 1 && m <= maxN && Math.abs(p.freq - m * base) <= tolerance(p.freq)) members.push({ ...p, n: m });
+      if (m >= 1 && m <= maxN && Math.abs(p.freq - m * base) <= tol(p.freq, m)) members.push({ ...p, n: m });
       else rest.push(p);
     }
     return { members, rest };
@@ -161,7 +161,11 @@ function groupTones(peaks) {
   // low harmonic (1st to 3rd) must be there.
   let best = null;
   for (const base of MAINS) {
-    const t = take(base, 20);
+    // Low mains harmonics get a looser match: they sit in the voice range,
+    // where the measured frequency can be pulled a few Hz, and are rebuilt as
+    // exact multiples below anyway. Higher ones must be close, or an unrelated
+    // tone (say 1000 Hz, near 17 x 60) would be swallowed.
+    const t = take(base, 20, (f, m) => (m <= 6 ? Math.max(8, f * 0.02) : Math.max(3, f * 0.004)));
     const ok = t.members.some((m) => m.n <= 3) && (t.members.length >= 2 || t.members[0].n === 1);
     if (ok && (!best || t.members.length > best.members.length)) best = { base, ...t };
   }
