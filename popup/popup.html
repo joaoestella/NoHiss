@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>NoHiss</title>
@@ -10,64 +10,65 @@
       <img src="../icons/icon48.png" alt="" width="28" height="28" />
       <div>
         <h1>NoHiss</h1>
-        <p class="sub">Tira o chiado de qualquer aba</p>
+        <p class="sub" data-i18n="app.sub"></p>
       </div>
-      <span id="status" class="pill">Desligado</span>
+      <span id="status" class="pill"></span>
+      <button id="lang" class="lang" data-i18n="lang.switch" data-i18n-title="lang.switchTitle"></button>
     </header>
 
-    <button id="toggle" class="primary">Limpar o áudio desta aba</button>
+    <button id="toggle" class="primary"></button>
     <p id="error" class="error" hidden></p>
 
     <section id="controls" class="controls" aria-disabled="true">
-      <div class="segmented" role="radiogroup" aria-label="Filtro">
-        <button id="modeSpectral" role="radio" data-mode="spectral">Chiado</button>
-        <button id="modeRnnoise" role="radio" data-mode="rnnoise">Voz (IA)</button>
+      <div class="segmented" role="radiogroup" data-i18n-aria-label="mode.label">
+        <button id="modeSpectral" role="radio" data-mode="spectral" data-i18n="mode.spectral"></button>
+        <button id="modeRnnoise" role="radio" data-mode="rnnoise" data-i18n="mode.rnnoise"></button>
       </div>
       <p id="modeHint" class="hint"></p>
 
       <div id="learnBox" class="learn">
         <div id="learnIdle">
-          <button id="learnBtn" class="accent-outline">Aprender o chiado (30 s)</button>
+          <button id="learnBtn" class="accent-outline" data-i18n="learn.button"></button>
           <p id="learnError" class="error" hidden></p>
-          <p class="hint">Deixe a live tocando normalmente, pode ter gente falando. Ele procura o som que continua lá o tempo todo.</p>
+          <p class="hint" data-i18n="learn.hint"></p>
         </div>
         <div id="learnRunning" hidden>
-          <div class="row"><span>Ouvindo o áudio…</span><span id="learnTime">0 / 30 s</span></div>
+          <div class="row"><span data-i18n="learn.listening"></span><span id="learnTime">0 / 30 s</span></div>
           <div class="bar"><div id="learnBar" class="fill"></div></div>
-          <button id="learnCancel" class="link">Cancelar</button>
+          <button id="learnCancel" class="link" data-i18n="learn.cancel"></button>
         </div>
         <div id="learnDone" hidden>
-          <div class="row"><span>Retrato do chiado</span><strong id="learnLevel"></strong></div>
-          <canvas id="curve" width="560" height="120" aria-label="Espectro do chiado aprendido"></canvas>
+          <div class="row"><span data-i18n="learn.fingerprint"></span><strong id="learnLevel"></strong></div>
+          <canvas id="curve" width="560" height="120" data-i18n-aria-label="learn.curveLabel"></canvas>
           <div class="row actions">
-            <button id="learnAgain" class="link">Aprender de novo</button>
-            <button id="forget" class="link">Esquecer</button>
+            <button id="learnAgain" class="link" data-i18n="learn.again"></button>
+            <button id="forget" class="link" data-i18n="learn.forget"></button>
           </div>
         </div>
       </div>
 
       <label class="row" for="amount">
-        <span>Intensidade</span>
+        <span data-i18n="amount.label"></span>
         <output id="amountValue">80%</output>
       </label>
       <input id="amount" type="range" min="0" max="100" step="1" value="80" />
 
       <div class="meter" aria-live="polite">
         <div class="row">
-          <span id="meterLabel">Chiado removido</span>
+          <span id="meterLabel"></span>
           <strong id="reduction">— dB</strong>
         </div>
         <div class="bar"><div id="reductionBar" class="fill"></div></div>
         <div id="vadRow" class="row small" hidden>
-          <span class="voice"><i id="voiceDot"></i> Voz detectada</span>
+          <span class="voice"><i id="voiceDot"></i> <span data-i18n="meter.voice"></span></span>
           <span id="vadValue">—</span>
         </div>
       </div>
 
-      <button id="compare" class="secondary">Segure para ouvir o original</button>
+      <button id="compare" class="secondary"></button>
     </section>
 
-    <footer>Tudo processado no seu computador</footer>
+    <footer data-i18n="footer"></footer>
 
     <script type="module" src="popup.js"></script>
   </body>

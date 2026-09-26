@@ -113,7 +113,7 @@ export async function createDenoiser(stream, { mode = 'spectral', amount = 0.8, 
       denoiser.learn = {
         ...denoiser.learn,
         status: denoiser.learn.levelDb !== null || denoiser.learn.saved ? 'learned' : 'idle',
-        error: 'Não ouvi nada nesses 30 s. Dê play na live e tente de novo.',
+        error: 'silence', // translated by the popup
       };
     } else if (d.type === 'learned') {
       if (!d.profile) return;

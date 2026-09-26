@@ -1,6 +1,9 @@
+import { t, setLang, getLang, applyStatic, has } from './i18n.js';
+
 const $ = (id) => document.getElementById(id);
 const els = {
   status: $('status'),
+  lang: $('lang'),
   toggle: $('toggle'),
   error: $('error'),
   controls: $('controls'),
@@ -31,10 +34,6 @@ const els = {
 };
 
 const LEARN_SECONDS = 30;
-const MODE_HINTS = {
-  spectral: 'Para chiado constante (microfone, fita, rádio). Preserva voz e música.',
-  rnnoise: 'Rede neural treinada para voz. Tira ruídos variados, mas pode apagar música.',
-};
 
 let tabId = null;
 let running = false;
@@ -42,23 +41,34 @@ let mode = 'spectral';
 let statsTimer = null;
 let lastCurveKey = '';
 
+// Last rendered state, so everything can be redrawn when the language changes.
+let activeElsewhere = false;
+let lastLearn = { status: 'idle' };
+let lastStats = null;
+let lastError = '';
+let bypassOn = false;
+
 const toBackground = (msg) => chrome.runtime.sendMessage({ target: 'background', ...msg });
 const toOffscreen = (msg) =>
   chrome.runtime.sendMessage({ target: 'offscreen', ...msg }).catch(() => null);
 
-function showError(text) {
-  els.error.textContent = text || '';
-  els.error.hidden = !text;
+// Errors come from the service worker as codes ("chrome-page", ...) or, for
+// unexpected failures, as raw messages that are shown as they are.
+function translateError(codeOrText) {
+  if (!codeOrText) return '';
+  return has(`error.${codeOrText}`) ? t(`error.${codeOrText}`) : codeOrText;
 }
 
-function render({ activeElsewhere = false } = {}) {
-  els.status.textContent = running ? 'Ligado' : activeElsewhere ? 'Em outra aba' : 'Desligado';
+function showError(codeOrText) {
+  lastError = codeOrText || '';
+  els.error.textContent = translateError(lastError);
+  els.error.hidden = !lastError;
+}
+
+function render() {
+  els.status.textContent = t(running ? 'status.on' : activeElsewhere ? 'status.elsewhere' : 'status.off');
   els.status.classList.toggle('on', running);
-  els.toggle.textContent = running
-    ? 'Parar e voltar ao áudio original'
-    : activeElsewhere
-      ? 'Limpar esta aba (para a outra)'
-      : 'Limpar o áudio desta aba';
+  els.toggle.textContent = t(running ? 'toggle.stop' : activeElsewhere ? 'toggle.switch' : 'toggle.start');
   els.toggle.classList.toggle('stop', running);
   els.controls.setAttribute('aria-disabled', String(!running));
 
@@ -74,13 +84,14 @@ function render({ activeElsewhere = false } = {}) {
 
 function renderMode() {
   for (const b of els.modeButtons) b.setAttribute('aria-checked', String(b.dataset.mode === mode));
-  els.modeHint.textContent = MODE_HINTS[mode];
+  els.modeHint.textContent = t(`mode.hint.${mode}`);
   els.learnBox.hidden = mode !== 'spectral';
   els.vadRow.hidden = mode !== 'rnnoise';
-  els.meterLabel.textContent = mode === 'spectral' ? 'Chiado removido' : 'Redução agora';
+  els.meterLabel.textContent = t(`meter.${mode}`);
 }
 
 function renderStats(stats) {
+  lastStats = stats;
   if (!stats) {
     els.reduction.textContent = '— dB';
     els.reductionBar.style.width = '0%';
@@ -102,11 +113,12 @@ function renderStats(stats) {
 }
 
 function renderLearn(learn) {
+  lastLearn = learn;
   const status = learn?.status ?? 'idle';
   els.learnIdle.hidden = status !== 'idle';
   els.learnRunning.hidden = status !== 'learning';
   els.learnDone.hidden = status !== 'learned';
-  els.learnError.textContent = learn?.error || '';
+  els.learnError.textContent = learn?.error ? t(`learn.error.${learn.error}`) : '';
   els.learnError.hidden = !learn?.error;
 
   if (status === 'learning') {
@@ -116,7 +128,7 @@ function renderLearn(learn) {
   }
   if (status === 'learned') {
     els.learnLevel.textContent =
-      typeof learn.levelDb === 'number' ? `nível ${learn.levelDb.toFixed(0)} dB` : 'salvo';
+      typeof learn.levelDb === 'number' ? t('learn.level', { db: learn.levelDb.toFixed(0) }) : t('learn.saved');
     drawCurve(learn.curve);
   }
 }
@@ -180,7 +192,21 @@ function renderAmount(value) {
   els.amountValue.textContent = `${Math.round(value * 100)}%`;
 }
 
+function renderAll() {
+  applyStatic();
+  render();
+  renderMode();
+  renderLearn(lastLearn);
+  renderStats(lastStats);
+  showError(lastError);
+  setBypassLabel();
+}
+
 async function init() {
+  const { lang } = await chrome.storage.local.get({ lang: 'en' });
+  setLang(lang);
+  applyStatic();
+
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   tabId = tab?.id ?? null;
 
@@ -192,16 +218,25 @@ async function init() {
 
   const { activeTabId } = await toBackground({ type: 'get-state' });
   running = activeTabId === tabId;
-  render({ activeElsewhere: activeTabId !== null && !running });
+  activeElsewhere = activeTabId !== null && !running;
+  renderAll();
 }
+
+els.lang.addEventListener('click', () => {
+  const next = getLang() === 'en' ? 'pt' : 'en';
+  setLang(next);
+  chrome.storage.local.set({ lang: next });
+  renderAll();
+});
 
 els.toggle.addEventListener('click', async () => {
   showError('');
   els.toggle.disabled = true;
   try {
     const res = await toBackground({ type: running ? 'stop' : 'start', tabId });
-    if (!res?.ok) throw new Error(res?.error || 'Algo deu errado.');
+    if (!res?.ok) throw new Error(res?.error || 'generic');
     running = !running;
+    activeElsewhere = false;
     render();
   } catch (err) {
     showError(err.message);
@@ -239,9 +274,13 @@ els.forget.addEventListener('click', () => {
 });
 
 // A/B comparison: while the button is held, play the original audio.
+function setBypassLabel() {
+  els.compare.classList.toggle('held', bypassOn);
+  els.compare.textContent = t(bypassOn ? 'compare.held' : 'compare.hold');
+}
 function setBypass(on) {
-  els.compare.classList.toggle('held', on);
-  els.compare.textContent = on ? 'Ouvindo o original…' : 'Segure para ouvir o original';
+  bypassOn = on;
+  setBypassLabel();
   toOffscreen({ type: 'set-params', bypass: on });
 }
 els.compare.addEventListener('pointerdown', (e) => {

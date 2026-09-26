@@ -74,6 +74,10 @@ AudioWorklet in Chromium, synthesized speech + hiss (10 dB SNR), 45 s of audio:
 - With music instead of voice, the Hiss filter kept the music nearly intact (−1 to −2 dB) while RNNoise cut 4 to 6 dB.
 - In "original" mode (bypass), the output is identical to the input.
 
+## Language
+
+The UI is in English by default. The button in the popup header switches to Brazilian Portuguese (and back); the choice is remembered.
+
 ## Limitations
 
 - Noise that keeps changing (keyboard, traffic) isn't "hiss" — the Voice (AI) mode works better for that.

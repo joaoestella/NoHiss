@@ -69,24 +69,20 @@ async function startCapture(tabId) {
   });
   if (!result?.ok) {
     await chrome.offscreen.closeDocument().catch(() => {});
-    throw new Error(result?.error || 'Falha ao iniciar o processamento de áudio.');
+    throw new Error(result?.error || 'start-failed');
   }
 
   await chrome.storage.session.set({ activeTabId: tabId });
   await setBadge(tabId, true);
 }
 
-function friendlyError(err) {
+// Known failures become codes that the popup translates; anything else is
+// passed through as the raw message.
+function errorCode(err) {
   const msg = String(err?.message || err);
-  if (/Chrome pages cannot be captured|chrome:\/\//i.test(msg)) {
-    return 'Páginas internas do Chrome não podem ser capturadas.';
-  }
-  if (/active stream/i.test(msg)) {
-    return 'Esta aba já está sendo capturada por outra extensão ou aplicativo.';
-  }
-  if (/not been invoked|activeTab|permission/i.test(msg)) {
-    return 'Abra o popup na aba que você quer limpar e tente de novo.';
-  }
+  if (/Chrome pages cannot be captured|chrome:\/\//i.test(msg)) return 'chrome-page';
+  if (/active stream/i.test(msg)) return 'already-captured';
+  if (/not been invoked|activeTab|permission/i.test(msg)) return 'not-invoked';
   return msg;
 }
 
@@ -116,7 +112,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     }
   })()
     .then(sendResponse)
-    .catch((err) => sendResponse({ ok: false, error: friendlyError(err) }));
+    .catch((err) => sendResponse({ ok: false, error: errorCode(err) }));
 
   return true; // async response
 });
