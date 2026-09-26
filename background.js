@@ -3,7 +3,7 @@
 // "stream id" and hands it to the offscreen document, which does the rest.
 
 const OFFSCREEN_URL = 'offscreen/offscreen.html';
-const DEFAULTS = { mode: 'spectral', amount: 0.8, profile: null };
+const DEFAULTS = { mode: 'spectral', amount: 0.8, profile: null, scan: null, selection: [] };
 
 async function getActiveTabId() {
   const { activeTabId } = await chrome.storage.session.get('activeTabId');
@@ -58,7 +58,7 @@ async function startCapture(tabId) {
   const streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
   await ensureOffscreenDocument();
 
-  const { mode, amount, profile } = await chrome.storage.local.get(DEFAULTS);
+  const { mode, amount, profile, scan, selection } = await chrome.storage.local.get(DEFAULTS);
   const result = await chrome.runtime.sendMessage({
     target: 'offscreen',
     type: 'start',
@@ -66,6 +66,8 @@ async function startCapture(tabId) {
     mode,
     amount,
     profile,
+    scan,
+    selection,
   });
   if (!result?.ok) {
     await chrome.offscreen.closeDocument().catch(() => {});
@@ -99,9 +101,13 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       case 'stop':
         await stopCapture();
         return { ok: true };
-      case 'save-profile':
-        // Learned hiss profile (or null to forget it).
-        await chrome.storage.local.set({ profile: msg.profile });
+      case 'save-learned':
+        // Learned hiss profile + scan of constant sounds (null to forget them).
+        await chrome.storage.local.set({
+          profile: msg.profile,
+          scan: msg.scan,
+          selection: msg.selection ?? [],
+        });
         return { ok: true };
       case 'capture-ended':
         // The tab was closed or the capture dropped for some other reason.

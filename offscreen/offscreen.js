@@ -9,7 +9,7 @@ let session = null; // { stream, denoiser }
 const toBackground = (msg) =>
   chrome.runtime.sendMessage({ target: 'background', ...msg }).catch(() => {});
 
-async function start({ streamId, mode, amount, profile }) {
+async function start({ streamId, mode, amount, profile, scan, selection }) {
   if (session) stop();
 
   const stream = await navigator.mediaDevices.getUserMedia({
@@ -22,10 +22,15 @@ async function start({ streamId, mode, amount, profile }) {
     video: false,
   });
 
-  const denoiser = await createDenoiser(stream, { mode, amount, profile });
-  // Persist the learned profile for the next time the extension is turned on.
-  denoiser.onProfileLearned = (prof, summary) =>
-    toBackground({ type: 'save-profile', profile: { profile: prof, ...summary } });
+  const denoiser = await createDenoiser(stream, { mode, amount, profile, scan, selection });
+  // Persist the learned profile and scan for the next time the extension is turned on.
+  denoiser.onProfileLearned = (prof, summary, newScan, newSelection) =>
+    toBackground({
+      type: 'save-learned',
+      profile: { profile: prof, ...summary },
+      scan: newScan,
+      selection: newSelection,
+    });
   session = { stream, denoiser };
 
   // If the tab closes or the capture drops, tell the service worker to clean up.
@@ -61,7 +66,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       break;
 
     case 'learn':
-      dn?.startLearning(msg.seconds || 30);
+      dn?.startLearning(msg.seconds || 30, { force: msg.force !== false });
       break;
 
     case 'cancel-learn':
@@ -70,7 +75,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 
     case 'forget':
       dn?.forgetProfile();
-      toBackground({ type: 'save-profile', profile: null });
+      toBackground({ type: 'save-learned', profile: null, scan: null, selection: [] });
       break;
 
     case 'get-stats':
@@ -78,6 +83,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         ok: true,
         running: !!session,
         mode: dn?.mode ?? null,
+        selection: dn?.selection ?? [],
         stats: dn?.stats ?? null,
         learn: dn?.learn ?? null,
       });
