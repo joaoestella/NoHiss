@@ -20,6 +20,12 @@
     <p id="error" class="error" hidden></p>
 
     <section id="controls" class="controls" aria-disabled="true">
+      <div class="tabs" role="tablist">
+        <button id="tabClean" role="tab" data-tab="clean" data-i18n="tab.clean"></button>
+        <button id="tabScan" role="tab" data-tab="scan" data-i18n="tab.scan"></button>
+      </div>
+
+      <div id="panelClean" class="needs-on" role="tabpanel">
       <div class="segmented" role="radiogroup" data-i18n-aria-label="mode.label">
         <button id="modeSpectral" role="radio" data-mode="spectral" data-i18n="mode.spectral"></button>
         <button id="modeRnnoise" role="radio" data-mode="rnnoise" data-i18n="mode.rnnoise"></button>
@@ -46,7 +52,31 @@
           </div>
         </div>
       </div>
+      </div>
 
+      <div id="panelScan" role="tabpanel" hidden>
+        <div id="scanIdle">
+          <button id="scanBtn" class="accent-outline" data-i18n="scan.button"></button>
+          <p class="hint" data-i18n="scan.hint"></p>
+        </div>
+        <div id="scanRunning" hidden>
+          <div class="row"><span data-i18n="scan.listening"></span><span id="scanTime">0 / 30 s</span></div>
+          <div class="bar"><div id="scanBar" class="fill"></div></div>
+          <p class="hint" data-i18n="scan.runningHint"></p>
+        </div>
+        <div id="scanDone" hidden>
+          <canvas id="scanChart" width="560" height="128" data-i18n-aria-label="scan.chart"></canvas>
+          <p class="hint" data-i18n="scan.pick"></p>
+          <ul id="scanList" class="scan-list"></ul>
+          <p id="scanEmpty" class="hint" data-i18n="scan.empty" hidden></p>
+          <div class="row actions">
+            <button id="scanAgain" class="link" data-i18n="scan.again"></button>
+          </div>
+        </div>
+        <p id="scanError" class="error" hidden></p>
+      </div>
+
+      <div class="shared needs-on">
       <label class="row" for="amount">
         <span data-i18n="amount.label"></span>
         <output id="amountValue">80%</output>
@@ -66,6 +96,7 @@
       </div>
 
       <button id="compare" class="secondary"></button>
+      </div>
     </section>
 
     <footer data-i18n="footer"></footer>

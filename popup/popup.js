@@ -1,4 +1,5 @@
 import { t, setLang, getLang, applyStatic, has } from './i18n.js';
+import { createScanPanel } from './scan-panel.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -7,6 +8,17 @@ const els = {
   toggle: $('toggle'),
   error: $('error'),
   controls: $('controls'),
+  tabs: [...document.querySelectorAll('.tabs button')],
+  panelClean: $('panelClean'),
+  panelScan: $('panelScan'),
+  scanIdle: $('scanIdle'),
+  scanRunning: $('scanRunning'),
+  scanDone: $('scanDone'),
+  scanBtn: $('scanBtn'),
+  scanTime: $('scanTime'),
+  scanBar: $('scanBar'),
+  scanAgain: $('scanAgain'),
+  scanError: $('scanError'),
   modeButtons: [...document.querySelectorAll('.segmented button')],
   modeHint: $('modeHint'),
   learnBox: $('learnBox'),
@@ -38,6 +50,14 @@ const LEARN_SECONDS = 30;
 let tabId = null;
 let running = false;
 let mode = 'spectral';
+let currentTab = 'clean';
+let scan = null;        // last scan of constant sounds (from storage)
+let selection = [];     // ids of the sounds picked in the Scan tab
+
+const scanPanel = createScanPanel(
+  { list: $('scanList'), empty: $('scanEmpty'), chart: $('scanChart') },
+  { onToggle: toggleComponent },
+);
 let statsTimer = null;
 let lastCurveKey = '';
 
@@ -84,10 +104,51 @@ function render() {
 
 function renderMode() {
   for (const b of els.modeButtons) b.setAttribute('aria-checked', String(b.dataset.mode === mode));
-  els.modeHint.textContent = t(`mode.hint.${mode}`);
+  els.modeHint.textContent = mode === 'custom'
+    ? t('mode.hint.custom', { n: selection.length })
+    : t(`mode.hint.${mode}`);
   els.learnBox.hidden = mode !== 'spectral';
   els.vadRow.hidden = mode !== 'rnnoise';
   els.meterLabel.textContent = t(`meter.${mode}`);
+}
+
+function renderTabs() {
+  for (const b of els.tabs) b.setAttribute('aria-selected', String(b.dataset.tab === currentTab));
+  els.panelClean.hidden = currentTab !== 'clean';
+  els.panelScan.hidden = currentTab !== 'scan';
+}
+
+// The scan is the same 30 s pass that learns the hiss, so its progress comes
+// from the learning state.
+function renderScan() {
+  const learning = lastLearn?.status === 'learning';
+  els.scanRunning.hidden = !learning;
+  els.scanIdle.hidden = learning || !!scan;
+  els.scanDone.hidden = learning || !scan;
+  els.scanError.textContent = lastLearn?.error ? t(`learn.error.${lastLearn.error}`) : '';
+  els.scanError.hidden = !lastLearn?.error;
+  if (learning) {
+    const secs = Math.min(LEARN_SECONDS, Math.round((lastLearn.progress || 0) * LEARN_SECONDS));
+    els.scanTime.textContent = `${secs} / ${LEARN_SECONDS} s`;
+    els.scanBar.style.width = `${Math.round((lastLearn.progress || 0) * 100)}%`;
+  }
+  if (scan && !learning) {
+    scanPanel.setScan(scan);
+    scanPanel.render(scan, new Set(mode === 'custom' ? selection : []));
+  }
+}
+
+function toggleComponent(id, checked) {
+  // Picking something switches to custom mode; coming from another mode starts
+  // from an empty selection so old picks don't come back unexpectedly.
+  const base = mode === 'custom' ? selection : [];
+  selection = checked ? [...new Set([...base, id])] : base.filter((x) => x !== id);
+  mode = 'custom';
+  chrome.storage.local.set({ mode, selection });
+  toOffscreen({ type: 'set-params', mode, selection });
+  renderMode();
+  renderScan();
+  renderStats(lastStats);
 }
 
 function renderStats(stats) {
@@ -99,8 +160,18 @@ function renderStats(stats) {
     els.vadValue.textContent = '—';
     return;
   }
-  // In Hiss mode, show how much of the estimated hiss was removed; in AI mode,
-  // the level difference between input and output.
+  // Custom mode with only tones picked: notch filters remove them completely,
+  // there's no broadband estimate to measure, so show how many are filtered.
+  if (mode === 'custom') {
+    const picked = scanPanel.components.filter((c) => selection.includes(c.id));
+    if (!picked.some((c) => c.kind === 'band')) {
+      els.reduction.textContent = t('meter.tones', { n: picked.length });
+      els.reductionBar.style.width = picked.length ? '100%' : '0%';
+      return;
+    }
+  }
+  // In Hiss/custom mode, show how much of the estimated noise was removed; in
+  // AI mode, the level difference between input and output.
   const raw = typeof stats.noiseReductionDb === 'number' ? stats.noiseReductionDb : stats.reductionDb;
   const db = Math.max(0, raw);
   // On hiss-only stretches the reduction goes past 35 dB; above 40 it's silence anyway.
@@ -114,6 +185,7 @@ function renderStats(stats) {
 
 function renderLearn(learn) {
   lastLearn = learn;
+  renderScan();
   const status = learn?.status ?? 'idle';
   els.learnIdle.hidden = status !== 'idle';
   els.learnRunning.hidden = status !== 'learning';
@@ -195,6 +267,7 @@ function renderAmount(value) {
 function renderAll() {
   applyStatic();
   render();
+  renderTabs();
   renderMode();
   renderLearn(lastLearn);
   renderStats(lastStats);
@@ -210,8 +283,18 @@ async function init() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   tabId = tab?.id ?? null;
 
-  const saved = await chrome.storage.local.get({ amount: 0.8, mode: 'spectral', profile: null });
+  const saved = await chrome.storage.local.get({
+    amount: 0.8,
+    mode: 'spectral',
+    profile: null,
+    scan: null,
+    selection: [],
+    tab: 'clean',
+  });
   mode = saved.mode;
+  scan = saved.scan;
+  selection = saved.selection;
+  currentTab = saved.tab;
   renderAmount(saved.amount);
   renderMode();
   renderLearn(saved.profile ? { status: 'learned', ...saved.profile } : { status: 'idle' });
@@ -229,19 +312,53 @@ els.lang.addEventListener('click', () => {
   renderAll();
 });
 
-els.toggle.addEventListener('click', async () => {
+async function setRunning(on) {
   showError('');
   els.toggle.disabled = true;
   try {
-    const res = await toBackground({ type: running ? 'stop' : 'start', tabId });
+    const res = await toBackground({ type: on ? 'start' : 'stop', tabId });
     if (!res?.ok) throw new Error(res?.error || 'generic');
-    running = !running;
+    running = on;
     activeElsewhere = false;
     render();
+    return true;
   } catch (err) {
     showError(err.message);
+    return false;
   } finally {
     els.toggle.disabled = false;
+  }
+}
+
+els.toggle.addEventListener('click', () => setRunning(!running));
+
+for (const b of els.tabs) {
+  b.addEventListener('click', () => {
+    currentTab = b.dataset.tab;
+    chrome.storage.local.set({ tab: currentTab });
+    renderTabs();
+    renderScan();
+  });
+}
+
+// Scanning needs the tab audio, so it turns the extension on if it's off.
+// force=false keeps the automatic pass that starts with it.
+async function scanTab(force) {
+  if (!running && !(await setRunning(true))) return;
+  toOffscreen({ type: 'learn', seconds: LEARN_SECONDS, force });
+  renderLearn({ ...lastLearn, status: 'learning', progress: 0, error: null });
+}
+els.scanBtn.addEventListener('click', () => scanTab(false));
+els.scanAgain.addEventListener('click', () => scanTab(true));
+
+// The service worker stores new scans; pick them up while the popup is open.
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== 'local') return;
+  if ('scan' in changes) scan = changes.scan.newValue ?? null;
+  if ('selection' in changes) selection = changes.selection.newValue ?? [];
+  if ('scan' in changes || 'selection' in changes) {
+    renderMode();
+    renderScan();
   }
 });
 
@@ -249,6 +366,7 @@ for (const b of els.modeButtons) {
   b.addEventListener('click', () => {
     mode = b.dataset.mode;
     renderMode();
+    renderScan();
     chrome.storage.local.set({ mode });
     toOffscreen({ type: 'set-params', mode });
   });
@@ -270,6 +388,7 @@ els.learnAgain.addEventListener('click', startLearning);
 els.learnCancel.addEventListener('click', () => toOffscreen({ type: 'cancel-learn' }));
 els.forget.addEventListener('click', () => {
   toOffscreen({ type: 'forget' });
+  scan = null;
   renderLearn({ status: 'idle' });
 });
 
