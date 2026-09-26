@@ -2,20 +2,20 @@
 
 A Chrome extension that **removes hiss and background noise from any tab's audio, in real time** — livestreams, videos, recorded classes, podcasts.
 
-When you turn it on, it listens to the first 30 seconds of the stream and finds, band by band, the sound that is there all the time. From then on it removes only that pattern, so voice and music pass through. The **Scan** tab goes further: it lists every constant sound it found (hiss, mains hum, a whine, a steady beep…) and you pick exactly which ones to remove. Everything runs on your computer.
+When you turn it on without a saved profile, it listens to the first 30 seconds of the stream and estimates, band by band, the sound that is there all the time. It reduces that pattern while aiming to preserve voice and music. The **Scan** tab goes further: it lists constant sounds it found (hiss, mains hum, a whine, a steady beep…) and you pick which ones to remove. Everything runs on your computer.
 
 ## Features
 
 - Turn it on and off per tab with one click.
 - **Two filters:**
-  - **Hiss** (default): spectral subtraction built for constant noise (bad mic, tape, radio). Keeps voice and music intact.
+  - **Hiss** (default): spectral subtraction built for constant noise (bad mic, tape, radio). Uses gentler attenuation and smooth transitions to help preserve voice and music.
   - **Voice (AI):** [RNNoise](https://github.com/xiph/rnnoise), a neural network trained on voice. Removes varying noise, but may wipe out music.
 - **Learns the hiss automatically** in the first 30 s, with a "hiss fingerprint" chart of the noise spectrum it found. The profile is saved for next time.
 - **Scan tab:** lists every constant sound with its level and a spectrum chart — mains hum with its harmonics, steady tones, high-pitched whines, hiss, background noise, rumble. Check what you want removed; it applies right away and leaves the rest alone.
-- **Strength:** how much hiss to remove (up to −35 dB).
+- **Strength:** starts at 60%; Hiss limits per-band attenuation to 18 dB at full strength. Voice (AI) retains at least 10% of the time-aligned original audio to soften model dropouts. Some residual noise is intentional.
 - **A/B comparison:** hold the button to hear the original.
 - Meter showing how much hiss is being removed.
-- ~21 ms of latency, so the voice stays in sync with the video.
+- ~21 ms of processing latency in Hiss and ~30 ms in Voice (AI), plus browser/device buffering.
 
 ## Install (developer mode)
 
@@ -27,6 +27,12 @@ When you turn it on, it listens to the first 30 seconds of the stream and finds,
 6. Leave it playing for 30 s while it learns the hiss. To choose exactly what to remove, open the **Scan** tab.
 
 Works on Chrome 116+ and Chromium-based browsers (Edge, Brave, Opera).
+
+### If speech sounds robotic
+
+Start with Hiss at 60% and compare using the original-audio button. Lower the strength if consonants or word endings sound metallic. Use Voice (AI) for speech with varying noise; it can still damage music or unusual voices. A saved strength is preserved on upgrade, so lower it manually if needed. Learn the hiss again when switching to a recording with different background noise; a profile learned from continuous speech or music can include wanted content.
+
+The smoother settings trade stronger noise removal for better preservation of quiet sounds. They cannot reconstruct speech already damaged in the source recording.
 
 ## How it works
 
@@ -55,7 +61,7 @@ Popup ──messages──▶ Service worker
    - *Learned:* for 30 s it builds a histogram of each band's energy and takes the 10th percentile — voice and music come and go, hiss stays. The value is corrected for statistical bias (for Gaussian noise, a band's energy follows an exponential distribution).
    - *Lower envelope:* hiss is smooth across the spectrum; voice and music harmonics are narrow peaks. For each band the profile becomes the 30th percentile of its neighbors (±1/6 octave), so a long note doesn't end up in the profile as noise.
    - Digital silence (paused video) is ignored; otherwise the floor would "drop to zero" and the filter would stop working.
-3. **Wiener gain with the decision-directed rule** (Ephraim–Malah): each band is lowered according to its signal-to-noise ratio, smoothed in time and frequency to avoid "musical noise" (the typical chirping of bad filters).
+3. **Wiener gain with the decision-directed rule** (Ephraim–Malah): each band is lowered according to its signal-to-noise ratio, with a recovery path for sudden energy rises above the estimated noise. Neighboring bands are smoothed, and gain opens with a 5 ms time constant and closes with a 70 ms time constant. Per-band attenuation is capped at 18 dB to reduce loss of quiet content; this does not guarantee artifact-free audio.
 4. **Overlap-add reconstruction.**
 
 ### The scan (`components.js`)
@@ -75,6 +81,16 @@ Removing what you picked (custom mode): broadband sounds go through the spectral
 The first version used only RNNoise. On a real stream it removed the voice along with the hiss, and in tests with sustained chords + hiss it kept only 12% of the music's level. RNNoise decides what is voice based on its training; when a sound doesn't look like what it knows, it gets cut. Hiss is constant and predictable, so a filter that *measures* the noise works better and leaves the rest alone.
 
 ## Test results
+
+### Current regression checks
+
+Run `node --test tests/audio.test.mjs` with Node.js 22 or later; no dependencies are needed. The eight tests exercise the processor code and bundled RNNoise WebAssembly in a simulated AudioWorklet environment: delayed stereo bypass, zero strength, silence, learned-noise attenuation with synthetic syllables, empty custom selection, the AI dry reserve, and measured RNNoise latency. These are signal-level checks, not a Chrome playback or listening evaluation.
+
+On a deterministic synthetic harmonic signal with pauses and white hiss, at 80% strength and with a known noise profile, the revised Hiss filter retained about 0.97 of the reference signal's level (previously 0.93), while pause-noise reduction changed from about 28 dB to 12 dB. These values describe that synthetic fixture only; they do not establish perceived quality on real speech.
+
+### Historical benchmarks (before the smoother settings)
+
+The results below were recorded for the earlier, more aggressive filter. They have not been reproduced for the revised settings and should not be treated as current performance claims.
 
 AudioWorklet in Chromium, synthesized speech + hiss (10 dB SNR), 45 s of audio:
 

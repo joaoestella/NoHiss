@@ -51,6 +51,9 @@ const LEARNED_FLOOR = 0.25;    // with a learned profile, go at most 6 dB lower
 const SILENCE = Math.pow(10, -90 / 10) * N * 0.5 * BINS;
 
 const DD_ALPHA = 0.98; // "decision-directed" smoothing (less musical noise)
+// Open quickly for consonants; close slowly so syllable tails don't flutter.
+const GAIN_OPEN = Math.exp(-HOP / (sampleRate * 0.005));
+const GAIN_CLOSE = Math.exp(-HOP / (sampleRate * 0.070));
 const EPS = 1e-20;
 
 // ---------- Radix-2 FFT (complex, in place) ----------
@@ -218,6 +221,7 @@ class ChannelState {
     this.noiseEst = new Float32Array(BINS);
     this.gPrev = new Float32Array(BINS).fill(1);
     this.gammaPrev = new Float32Array(BINS).fill(1);
+    this.appliedGain = new Float32Array(BINS).fill(1);
     this.hist = null;
   }
 }
@@ -225,8 +229,8 @@ class ChannelState {
 class SpectralProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors() {
     return [
-      // 0 = remove nothing, 1 = lower the hiss by up to 35 dB.
-      { name: 'amount', defaultValue: 0.8, minValue: 0, maxValue: 1, automationRate: 'k-rate' },
+      // 0 = remove nothing, 1 = lower individual bands by up to 18 dB.
+      { name: 'amount', defaultValue: 0.6, minValue: 0, maxValue: 1, automationRate: 'k-rate' },
       { name: 'bypass', defaultValue: 0, minValue: 0, maxValue: 1, automationRate: 'k-rate' },
     ];
   }
@@ -497,8 +501,8 @@ class SpectralProcessor extends AudioWorkletProcessor {
   }
 
   processFrame(channels, amount, bypass) {
-    const floor = Math.pow(10, (-35 * amount) / 20);
-    const over = 1 + amount; // subtract a bit more when the strength is high
+    const floor = Math.pow(10, (-18 * amount) / 20);
+    const over = 1 + 0.25 * amount;
     const re = this.re;
     const im = this.im;
     const learning = this.learning;
@@ -553,8 +557,13 @@ class SpectralProcessor extends AudioWorkletProcessor {
         st.noiseEst[k] = est;
         const Nk = est * over + EPS;
         const gamma = P / Nk;
-        const xi = DD_ALPHA * st.gPrev[k] * st.gPrev[k] * st.gammaPrev[k]
+        let xi = DD_ALPHA * st.gPrev[k] * st.gPrev[k] * st.gammaPrev[k]
           + (1 - DD_ALPHA) * Math.max(gamma - 1, 0);
+        // The recursive estimate alone can miss a short consonant after a
+        // pause. Recover promptly only when energy rises above the noise.
+        if (gamma > 3 && gamma > 2 * st.gammaPrev[k]) {
+          xi = Math.max(xi, 0.5 * (gamma - 1));
+        }
         let g = xi / (1 + xi);
         st.gPrev[k] = g;
         st.gammaPrev[k] = Math.min(gamma, 1e6);
@@ -566,7 +575,13 @@ class SpectralProcessor extends AudioWorkletProcessor {
       for (let k = 0; k < BINS; k++) {
         const a = this.gain[k > 0 ? k - 1 : 0];
         const b = this.gain[k < BINS - 1 ? k + 1 : BINS - 1];
-        G[k] = bypass ? 1 : 0.25 * a + 0.5 * this.gain[k] + 0.25 * b;
+        const target = 0.25 * a + 0.5 * this.gain[k] + 0.25 * b;
+        const previous = st.appliedGain[k];
+        const smoothing = target > previous ? GAIN_OPEN : GAIN_CLOSE;
+        // An empty custom band must stay transparent, including after edits.
+        const transparent = bypass || amount === 0 || (custom && !custom.profile?.[k]);
+        G[k] = transparent ? 1 : smoothing * previous + (1 - smoothing) * target;
+        st.appliedGain[k] = G[k];
       }
       if (c === 0 && !silent) {
         // How much of the estimated hiss is being removed (for the meter).

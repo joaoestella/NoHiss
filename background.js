@@ -3,7 +3,7 @@
 // "stream id" and hands it to the offscreen document, which does the rest.
 
 const OFFSCREEN_URL = 'offscreen/offscreen.html';
-const DEFAULTS = { mode: 'spectral', amount: 0.8, profile: null, scan: null, selection: [] };
+const DEFAULTS = { mode: 'spectral', amount: 0.6, profile: null, scan: null, selection: [] };
 
 async function getActiveTabId() {
   const { activeTabId } = await chrome.storage.session.get('activeTabId');
