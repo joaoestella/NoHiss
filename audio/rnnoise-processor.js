@@ -123,6 +123,12 @@ class RnnoiseProcessor extends AudioWorkletProcessor {
     const n = output[0].length;
     const inChannels = input.length;
 
+    // No input connected (the other mode is active): don't burn CPU.
+    if (inChannels === 0) {
+      for (const ch of output) ch.fill(0);
+      return true;
+    }
+
     // Stereo runs two independent RNNoise instances; mono runs one and duplicates it.
     const channels = inChannels >= 2 ? 2 : 1;
 
