@@ -19,20 +19,46 @@
     <p id="error" class="error" hidden></p>
 
     <section id="controls" class="controls" aria-disabled="true">
-      <label class="row" for="mix">
+      <div class="segmented" role="radiogroup" aria-label="Filtro">
+        <button id="modeSpectral" role="radio" data-mode="spectral">Chiado</button>
+        <button id="modeRnnoise" role="radio" data-mode="rnnoise">Voz (IA)</button>
+      </div>
+      <p id="modeHint" class="hint"></p>
+
+      <div id="learnBox" class="learn">
+        <div id="learnIdle">
+          <button id="learnBtn" class="accent-outline">Aprender o chiado (30 s)</button>
+          <p id="learnError" class="error" hidden></p>
+          <p class="hint">Deixe a live tocando normalmente, pode ter gente falando. Ele procura o som que continua lá o tempo todo.</p>
+        </div>
+        <div id="learnRunning" hidden>
+          <div class="row"><span>Ouvindo o áudio…</span><span id="learnTime">0 / 30 s</span></div>
+          <div class="bar"><div id="learnBar" class="fill"></div></div>
+          <button id="learnCancel" class="link">Cancelar</button>
+        </div>
+        <div id="learnDone" hidden>
+          <div class="row"><span>Retrato do chiado</span><strong id="learnLevel"></strong></div>
+          <canvas id="curve" width="560" height="120" aria-label="Espectro do chiado aprendido"></canvas>
+          <div class="row actions">
+            <button id="learnAgain" class="link">Aprender de novo</button>
+            <button id="forget" class="link">Esquecer</button>
+          </div>
+        </div>
+      </div>
+
+      <label class="row" for="amount">
         <span>Intensidade</span>
-        <output id="mixValue">100%</output>
+        <output id="amountValue">80%</output>
       </label>
-      <input id="mix" type="range" min="0" max="100" step="1" value="100" />
-      <p class="hint">Se a live tiver música e ela ficar abafada, diminua a intensidade.</p>
+      <input id="amount" type="range" min="0" max="100" step="1" value="80" />
 
       <div class="meter" aria-live="polite">
         <div class="row">
-          <span>Ruído removido</span>
+          <span id="meterLabel">Chiado removido</span>
           <strong id="reduction">— dB</strong>
         </div>
         <div class="bar"><div id="reductionBar" class="fill"></div></div>
-        <div class="row small">
+        <div id="vadRow" class="row small" hidden>
           <span class="voice"><i id="voiceDot"></i> Voz detectada</span>
           <span id="vadValue">—</span>
         </div>
@@ -41,7 +67,7 @@
       <button id="compare" class="secondary">Segure para ouvir o original</button>
     </section>
 
-    <footer>RNNoise em WebAssembly · tudo processado no seu computador</footer>
+    <footer>Tudo processado no seu computador</footer>
 
     <script type="module" src="popup.js"></script>
   </body>

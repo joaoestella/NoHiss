@@ -3,7 +3,7 @@
 // "stream id" and hands it to the offscreen document, which does the rest.
 
 const OFFSCREEN_URL = 'offscreen/offscreen.html';
-const DEFAULTS = { mix: 1 };
+const DEFAULTS = { mode: 'spectral', amount: 0.8, profile: null };
 
 async function getActiveTabId() {
   const { activeTabId } = await chrome.storage.session.get('activeTabId');
@@ -58,12 +58,14 @@ async function startCapture(tabId) {
   const streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
   await ensureOffscreenDocument();
 
-  const { mix } = await chrome.storage.local.get(DEFAULTS);
+  const { mode, amount, profile } = await chrome.storage.local.get(DEFAULTS);
   const result = await chrome.runtime.sendMessage({
     target: 'offscreen',
     type: 'start',
     streamId,
-    mix,
+    mode,
+    amount,
+    profile,
   });
   if (!result?.ok) {
     await chrome.offscreen.closeDocument().catch(() => {});
@@ -100,6 +102,10 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
         return { ok: true };
       case 'stop':
         await stopCapture();
+        return { ok: true };
+      case 'save-profile':
+        // Learned hiss profile (or null to forget it).
+        await chrome.storage.local.set({ profile: msg.profile });
         return { ok: true };
       case 'capture-ended':
         // The tab was closed or the capture dropped for some other reason.

@@ -1,4 +1,4 @@
-// Offscreen document: receives the tab audio, runs it through RNNoise and plays
+// Offscreen document: receives the tab audio, runs it through the filter and plays
 // the result. When a tab is captured, Chrome mutes its original sound,
 // so the clean audio has to be played from here.
 
@@ -6,7 +6,10 @@ import { createDenoiser } from '../audio/pipeline.js';
 
 let session = null; // { stream, denoiser }
 
-async function start(streamId, mix) {
+const toBackground = (msg) =>
+  chrome.runtime.sendMessage({ target: 'background', ...msg }).catch(() => {});
+
+async function start({ streamId, mode, amount, profile }) {
   if (session) stop();
 
   const stream = await navigator.mediaDevices.getUserMedia({
@@ -19,14 +22,15 @@ async function start(streamId, mix) {
     video: false,
   });
 
-  const denoiser = await createDenoiser(stream, { mix });
+  const denoiser = await createDenoiser(stream, { mode, amount, profile });
+  // Persist the learned profile for the next time the extension is turned on.
+  denoiser.onProfileLearned = (prof, summary) =>
+    toBackground({ type: 'save-profile', profile: { profile: prof, ...summary } });
   session = { stream, denoiser };
 
   // If the tab closes or the capture drops, tell the service worker to clean up.
   for (const track of stream.getAudioTracks()) {
-    track.addEventListener('ended', () => {
-      chrome.runtime.sendMessage({ target: 'background', type: 'capture-ended' }).catch(() => {});
-    });
+    track.addEventListener('ended', () => toBackground({ type: 'capture-ended' }));
   }
 }
 
@@ -39,29 +43,49 @@ function stop() {
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg?.target !== 'offscreen') return false;
+  const dn = session?.denoiser;
 
   switch (msg.type) {
     case 'start':
-      start(msg.streamId, msg.mix)
+      start(msg)
         .then(() => sendResponse({ ok: true }))
         .catch((err) => sendResponse({ ok: false, error: String(err?.message || err) }));
       return true;
 
     case 'stop':
       stop();
-      sendResponse({ ok: true });
-      return false;
+      break;
 
     case 'set-params':
-      session?.denoiser.setParams(msg);
-      sendResponse({ ok: true });
-      return false;
+      dn?.setParams(msg);
+      break;
+
+    case 'learn':
+      dn?.startLearning(msg.seconds || 30);
+      break;
+
+    case 'cancel-learn':
+      dn?.cancelLearning();
+      break;
+
+    case 'forget':
+      dn?.forgetProfile();
+      toBackground({ type: 'save-profile', profile: null });
+      break;
 
     case 'get-stats':
-      sendResponse({ ok: true, running: !!session, stats: session?.denoiser.stats ?? null });
+      sendResponse({
+        ok: true,
+        running: !!session,
+        mode: dn?.mode ?? null,
+        stats: dn?.stats ?? null,
+        learn: dn?.learn ?? null,
+      });
       return false;
 
     default:
       return false;
   }
+  sendResponse({ ok: true });
+  return false;
 });
