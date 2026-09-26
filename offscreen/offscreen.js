@@ -33,6 +33,10 @@ async function start({ streamId, mode, amount, profile, scan, selection }) {
     });
   session = { stream, denoiser };
 
+  // Nothing learned yet: listen for 30 s right away, so the hiss profile and
+  // the scan of constant sounds are ready without an extra click.
+  if (!profile) denoiser.startLearning(30);
+
   // If the tab closes or the capture drops, tell the service worker to clean up.
   for (const track of stream.getAudioTracks()) {
     track.addEventListener('ended', () => toBackground({ type: 'capture-ended' }));
