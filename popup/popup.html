@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>NoHiss</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <img src="../icons/icon48.png" alt="" width="28" height="28" />
+      <div>
+        <h1>NoHiss</h1>
+        <p class="sub">Tira o chiado de qualquer aba</p>
+      </div>
+      <span id="status" class="pill">Desligado</span>
+    </header>
+
+    <button id="toggle" class="primary">Limpar o áudio desta aba</button>
+    <p id="error" class="error" hidden></p>
+
+    <section id="controls" class="controls" aria-disabled="true">
+      <label class="row" for="mix">
+        <span>Intensidade</span>
+        <output id="mixValue">100%</output>
+      </label>
+      <input id="mix" type="range" min="0" max="100" step="1" value="100" />
+      <p class="hint">Se a live tiver música e ela ficar abafada, diminua a intensidade.</p>
+
+      <div class="meter" aria-live="polite">
+        <div class="row">
+          <span>Ruído removido</span>
+          <strong id="reduction">— dB</strong>
+        </div>
+        <div class="bar"><div id="reductionBar" class="fill"></div></div>
+        <div class="row small">
+          <span class="voice"><i id="voiceDot"></i> Voz detectada</span>
+          <span id="vadValue">—</span>
+        </div>
+      </div>
+
+      <button id="compare" class="secondary">Segure para ouvir o original</button>
+    </section>
+
+    <footer>RNNoise em WebAssembly · tudo processado no seu computador</footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
