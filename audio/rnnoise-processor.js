@@ -3,9 +3,12 @@
 //
 // Web Audio delivers blocks of 128 samples, but RNNoise works on frames
 // of 480 samples (10 ms at 48 kHz). So the processor buffers the incoming
-// samples, runs RNNoise every 480 of them and returns the result with a
-// fixed 10 ms delay. The original ("dry") signal goes through the same delay,
-// so both can be mixed without misalignment (the strength control).
+// samples, runs RNNoise every 480 of them and returns the result.
+//
+// Total latency: 30 ms = 10 ms of that buffer + 20 ms inside RNNoise
+// (it looks two frames back before returning audio). The original
+// ("dry") signal is delayed by exactly the same amount, so both can be
+// mixed (the strength control) without an echo/comb-filter effect.
 
 import createRNNWasmModuleSync from './vendor/rnnoise-sync.js';
 
@@ -15,6 +18,8 @@ const MAX_CHANNELS = 2;
 const RING = 4096;          // power of 2, far larger than needed
 const RING_MASK = RING - 1;
 const STATS_EVERY = 12000;  // post stats every 250 ms
+const RNN_DELAY_FRAMES = 2; // RNNoise internal delay (measured: 960 samples)
+const HISTORY = RNN_DELAY_FRAMES + 1;
 
 class RnnoiseProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors() {
@@ -39,13 +44,16 @@ class RnnoiseProcessor extends AudioWorkletProcessor {
     }
 
     this.inFrame = [];
+    this.history = []; // last input frames, used to delay the dry signal
     this.dry = [];
     this.wet = [];
     for (let c = 0; c < MAX_CHANNELS; c++) {
       this.inFrame.push(new Float32Array(FRAME));
+      this.history.push(Array.from({ length: HISTORY }, () => new Float32Array(FRAME)));
       this.dry.push(new Float32Array(RING));
       this.wet.push(new Float32Array(RING));
     }
+    this.histIdx = 0;
     this.inPos = 0;
     this.readIdx = 0;
     // Start with one frame of silence queued: guarantees there are always
@@ -68,8 +76,14 @@ class RnnoiseProcessor extends AudioWorkletProcessor {
     const w = this.writeIdx;
     let vad = 0;
 
+    const h = this.histIdx;
+    const hDelayed = (h + 1) % HISTORY; // the frame from RNN_DELAY_FRAMES ago
+
     for (let c = 0; c < channels; c++) {
       const frame = this.inFrame[c];
+      const hist = this.history[c];
+      hist[h].set(frame);
+      const delayed = hist[hDelayed];
       const dry = this.dry[c];
       const wet = this.wet[c];
 
@@ -83,18 +97,20 @@ class RnnoiseProcessor extends AudioWorkletProcessor {
         heap = this.wasm.HEAPF32; // memory may have grown
         for (let i = 0; i < FRAME; i++) {
           const idx = (w + i) & RING_MASK;
-          dry[idx] = frame[i];
+          dry[idx] = delayed[i];
           wet[idx] = heap[base + i] / SCALE;
         }
       } else {
+        // Without RNNoise: pass the audio through with the same delay, unprocessed.
         for (let i = 0; i < FRAME; i++) {
           const idx = (w + i) & RING_MASK;
-          dry[idx] = frame[i];
-          wet[idx] = frame[i];
+          dry[idx] = delayed[i];
+          wet[idx] = delayed[i];
         }
       }
     }
 
+    this.histIdx = (h + 1) % HISTORY;
     this.writeIdx = (w + FRAME) & RING_MASK;
     this.queued += FRAME;
     this.statVad += vad;
