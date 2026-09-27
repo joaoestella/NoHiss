@@ -29,7 +29,7 @@
     <article id="portugues" lang="pt-BR" aria-labelledby="titulo-pt">
       <h2 id="titulo-pt">Português</h2>
       <p>Última atualização: <time datetime="2026-09-27">27 de setembro de 2026</time>.</p>
-      <p class="summary">O NoHiss processa o áudio da aba escolhida no seu dispositivo para reduzir ruídos. A extensão não envia esse áudio ao desenvolvedor nem a serviços de inteligência artificial.</p>
+      <p class="summary"><strong>Seu áudio é processado no seu dispositivo.</strong> O NoHiss não envia áudio, perfis de ruído ou preferências ao desenvolvedor e não mantém um banco de dados de usuários em servidor. Não grava arquivos de áudio. Para lembrar suas escolhas, salva preferências e informações numéricas do filtro somente no armazenamento local do navegador, no seu dispositivo.</p>
 
       <h2>Responsável e contato</h2>
       <p>Esta política descreve a extensão NoHiss, mantida pelo responsável pelo projeto <a href="https://github.com/joaoestella/NoHiss">joaoestella/NoHiss</a>. Para dúvidas sobre privacidade ou suporte, escreva para <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>
@@ -41,6 +41,18 @@
       <h2>Informações armazenadas no navegador</h2>
       <p>O NoHiss usa o armazenamento local da extensão para guardar idioma, intensidade, modo do filtro, painel escolhido, perfil de ruído aprendido, resultados da varredura e sons selecionados para remoção. Os perfis e resultados são informações numéricas derivadas do espectro do áudio, não gravações de áudio. Um identificador da aba ativa é mantido no armazenamento de sessão para coordenar a captura.</p>
       <p>Essas informações servem para aplicar o filtro e restaurar suas escolhas. O NoHiss não as envia ao desenvolvedor, não usa sincronização de dados da extensão pela nuvem e não mantém um histórico das páginas visitadas.</p>
+
+      <h2>O que “local” significa e como conferir</h2>
+      <p>O caminho do áudio é: <strong>aba selecionada → filtro dentro do navegador → saída de som</strong>. A captura necessária ao filtro é um tratamento local de áudio; isso não significa envio ao desenvolvedor. A extensão não exige conta e não implementa coleta remota de dados de uso, gravações ou perfis. Também não usa o armazenamento sincronizado do Chrome.</p>
+      <p>O código público permite conferir esse funcionamento:</p>
+      <ul>
+        <li><a href="https://github.com/joaoestella/NoHiss/blob/main/offscreen/offscreen.js">Captura da aba</a> e <a href="https://github.com/joaoestella/NoHiss/blob/main/audio/pipeline.js">filtros locais</a>: o fluxo de áudio é conectado à saída de som do navegador.</li>
+        <li><a href="https://github.com/joaoestella/NoHiss/blob/main/background.js">Armazenamento dos perfis</a> e <a href="https://github.com/joaoestella/NoHiss/blob/main/popup/popup.js">preferências</a>: usam <code>chrome.storage.local</code>; o identificador da aba usa <code>chrome.storage.session</code>.</li>
+        <li><a href="https://github.com/joaoestella/NoHiss/blob/main/audio/vendor/rnnoise-sync.js">RNNoise incluído no pacote</a>: o modelo executa no dispositivo, sem uma API de inteligência artificial remota.</li>
+      </ul>
+      <p>Essas referências descrevem a implementação distribuída pelo projeto, não uma certificação independente. Dados locais continuam ocupando memória ou armazenamento no dispositivo. Eles não são protegidos contra alguém que já tenha acesso ao perfil do navegador ou à máquina. Cópias do perfil feitas pelo sistema operacional ou por outras ferramentas estão fora do controle da extensão.</p>
+      <p>O site em que o áudio toca, o navegador, a loja de extensões e serviços de e-mail têm práticas próprias de dados. Processamento local pelo NoHiss não torna esses serviços anônimos nem impede as conexões que eles realizam.</p>
+      <p>Limitações de funcionamento e responsabilidades são descritas nos <a href="terms.html#portugues">Termos de uso</a>.</p>
 
       <h2>Compartilhamento, publicidade e uso limitado</h2>
       <p>A extensão não inclui publicidade, rastreadores ou telemetria. O áudio e os perfis locais não são vendidos, compartilhados com anunciantes ou enviados a terceiros. O desenvolvedor não recebe acesso a esses dados pela extensão.</p>
@@ -61,6 +73,10 @@
       <p>Se você entrar em contato por e-mail, seu endereço e o conteúdo enviado serão tratados para responder à solicitação. Isso é separado do processamento local da extensão e envolve os provedores de e-mail utilizados. Evite enviar gravações ou informações sensíveis desnecessárias. Você pode solicitar a exclusão da correspondência pelo mesmo endereço de contato.</p>
       <p>Quando esta página é acessada pelo GitHub Pages, o GitHub pode tratar dados técnicos da visita, como o endereço IP, conforme sua <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">política de privacidade</a>. A página não carrega ferramentas de análise, fontes externas nem scripts de terceiros. Acessar esta página não envia o áudio da aba ao GitHub.</p>
 
+      <h2>Seus direitos e solicitações</h2>
+      <p>O desenvolvedor não recebe nem consegue acessar ou excluir os dados armazenados localmente pela extensão. Você pode removê-los conforme as instruções desta política.</p>
+      <p>Se entrar em contato por e-mail, seu endereço e sua mensagem serão utilizados para atender à solicitação e mantidos pelo tempo necessário a essa finalidade, observadas as obrigações legais aplicáveis. Para dúvidas ou solicitações relativas a essa correspondência, utilize o mesmo e-mail de contato.</p>
+
       <h2>Atualizações</h2>
       <p>Esta política será atualizada quando houver mudanças relevantes no tratamento de dados. A data acima identifica a versão publicada. Dúvidas podem ser enviadas para <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>
     </article>
@@ -68,7 +84,7 @@
     <article id="english" lang="en" aria-labelledby="title-en">
       <h2 id="title-en">English</h2>
       <p>Last updated: <time datetime="2026-09-27">September 27, 2026</time>.</p>
-      <p class="summary">NoHiss processes audio from your selected tab on your device to reduce noise. The extension does not send this audio to the developer or to artificial intelligence services.</p>
+      <p class="summary"><strong>Your audio is processed on your device.</strong> NoHiss does not send audio, noise profiles or preferences to the developer and does not maintain a server-side user database. It does not save audio recordings. To remember your choices, it saves preferences and numerical filter information only in the browser’s local storage on your device.</p>
 
       <h2>Operator and contact</h2>
       <p>This policy describes the NoHiss extension, maintained by the owner of the <a href="https://github.com/joaoestella/NoHiss">joaoestella/NoHiss</a> project. For privacy questions or support, contact <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>
@@ -80,6 +96,18 @@
       <h2>Information stored in your browser</h2>
       <p>NoHiss uses local extension storage for the language, strength, filter mode, selected panel, learned noise profile, scan results, and sounds selected for removal. Profiles and scan results contain numerical information derived from the audio spectrum, not audio recordings. An active tab identifier is kept in session storage to coordinate capture.</p>
       <p>This information is used to apply the filter and restore your choices. NoHiss does not send it to the developer, use cloud synchronization for extension data, or maintain a history of the pages you visit.</p>
+
+      <h2>What “local” means and how to verify it</h2>
+      <p>The audio path is: <strong>selected tab → filter within the browser → audio output</strong>. Capturing audio for the filter is local data processing; it does not mean sending it to the developer. The extension requires no account and implements no remote collection of usage data, recordings or profiles. It does not use Chrome’s synchronized storage.</p>
+      <p>The public source code lets you inspect this behavior:</p>
+      <ul>
+        <li><a href="https://github.com/joaoestella/NoHiss/blob/main/offscreen/offscreen.js">Tab capture</a> and <a href="https://github.com/joaoestella/NoHiss/blob/main/audio/pipeline.js">local filters</a>: the audio stream is connected to the browser’s audio output.</li>
+        <li><a href="https://github.com/joaoestella/NoHiss/blob/main/background.js">Profile storage</a> and <a href="https://github.com/joaoestella/NoHiss/blob/main/popup/popup.js">preferences</a>: use <code>chrome.storage.local</code>; the tab identifier uses <code>chrome.storage.session</code>.</li>
+        <li><a href="https://github.com/joaoestella/NoHiss/blob/main/audio/vendor/rnnoise-sync.js">Bundled RNNoise</a>: the model runs on the device without a remote AI API.</li>
+      </ul>
+      <p>These references describe the implementation distributed by the project, not an independent certification. Local data still occupy memory or storage on the device. They are not protected from someone who already has access to the browser profile or computer. Copies of the profile made by the operating system or other tools are outside the extension’s control.</p>
+      <p>The website playing the audio, browser, extension store and email services have their own data practices. Local processing by NoHiss does not make those services anonymous or prevent their network connections.</p>
+      <p>Functional limitations and responsibilities are described in the <a href="terms.html#english">Terms of Use</a>.</p>
 
       <h2>Sharing, advertising and Limited Use</h2>
       <p>The extension includes no advertising, trackers or telemetry. Audio and local profiles are not sold, shared with advertisers or sent to third parties. The developer does not receive access to these data through the extension.</p>
@@ -99,6 +127,10 @@
       <h2>Email support and this policy page</h2>
       <p>If you contact support by email, your address and the information you send are handled to respond to your request. This is separate from the extension's local processing and involves the email providers used. Avoid sending unnecessary recordings or sensitive information. You can request deletion of correspondence using the same contact address.</p>
       <p>When this page is accessed through GitHub Pages, GitHub may process technical visit data, such as an IP address, under its <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a>. This page loads no analytics, external fonts or third-party scripts. Visiting it does not send tab audio to GitHub.</p>
+
+      <h2>Your rights and requests</h2>
+      <p>The developer does not receive and cannot access or delete data stored locally by the extension. You can remove these data by following the instructions in this policy.</p>
+      <p>If you contact us by email, your address and message will be used to handle your request and retained for as long as necessary for that purpose, subject to applicable legal obligations. For questions or requests about this correspondence, use the same contact email address.</p>
 
       <h2>Changes</h2>
       <p>This policy will be updated when data handling changes materially. The date above identifies the published version. Questions can be sent to <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>

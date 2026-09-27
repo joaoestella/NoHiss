@@ -133,11 +133,15 @@ The UI is in English by default. The button in the popup header switches to Braz
 
 ## Privacy
 
-NoHiss processes tab audio locally. It does not upload audio or save raw audio recordings. Preferences, learned noise profiles and scan results are stored in the browser.
+NoHiss processes tab audio locally and does not send audio, noise profiles or preferences to the developer. It saves no raw audio recordings and has no server-side user database or telemetry. Preferences, learned noise profiles and scan results are saved locally in the browser; the active tab ID is kept in session storage. This is local storage, not an absence of data processing or storage. The privacy policy links to the relevant source files so this behavior can be inspected.
 
 The bilingual [privacy policy](docs/index.html) is bundled with the extension and available from the popup. Privacy and support contact: [joaoestella.dev@gmail.com](mailto:joaoestella.dev@gmail.com).
 
 For GitHub Pages, select **Settings → Pages → Deploy from a branch → main → /docs** and save. Once the deployment completes, the policy will be available at [https://joaoestella.github.io/NoHiss/](https://joaoestella.github.io/NoHiss/). Use that published URL in the Chrome Web Store privacy policy field.
+
+## Terms of use
+
+The bilingual [Terms of Use](docs/terms.html) describe filtering artifacts, bugs, user conduct and limitations of warranties and liability to the extent permitted by applicable law. They do not waive mandatory rights or guarantee immunity from liability. They are bundled with the extension and linked from its popup.
 
 ## Credits and licenses
 
