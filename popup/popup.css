@@ -259,3 +259,6 @@ canvas#scanChart {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
+
+.privacy-link { display: inline-block; margin-top: 4px; color: var(--muted); text-underline-offset: 3px; }
+.privacy-link:hover, .privacy-link:focus-visible { color: var(--text); }

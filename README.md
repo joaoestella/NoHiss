@@ -131,6 +131,14 @@ The UI is in English by default. The button in the popup header switches to Braz
 - Per-site profiles.
 - Publish on the Chrome Web Store.
 
+## Privacy
+
+NoHiss processes tab audio locally. It does not upload audio or save raw audio recordings. Preferences, learned noise profiles and scan results are stored in the browser.
+
+The bilingual [privacy policy](docs/index.html) is bundled with the extension and available from the popup. Privacy and support contact: [joaoestella.dev@gmail.com](mailto:joaoestella.dev@gmail.com).
+
+For GitHub Pages, select **Settings → Pages → Deploy from a branch → main → /docs** and save. Once the deployment completes, the policy will be available at [https://joaoestella.github.io/NoHiss/](https://joaoestella.github.io/NoHiss/). Use that published URL in the Chrome Web Store privacy policy field.
+
 ## Credits and licenses
 
 - **RNNoise**, by Jean-Marc Valin and other contributors: noise suppression library, distributed under BSD-3-Clause. See the [full RNNoise license and copyright notices](audio/vendor/RNNOISE-LICENSE.txt).

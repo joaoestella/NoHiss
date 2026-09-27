@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Política de privacidade do NoHiss / NoHiss Privacy Policy. Processamento local de áudio e armazenamento no navegador.">
+  <title>NoHiss — Política de privacidade / Privacy Policy</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; line-height: 1.65; }
+    body { margin: 0 auto; max-width: 780px; padding: 32px 22px 64px; }
+    header { border-bottom: 1px solid #8886; padding-bottom: 24px; }
+    h1 { font-size: clamp(1.8rem, 5vw, 2.5rem); line-height: 1.2; }
+    h2 { margin-top: 2rem; line-height: 1.3; font-size: 1.25rem; }
+    a { color: #087c45; text-underline-offset: 3px; overflow-wrap: anywhere; }
+    nav a { display: inline-block; margin-right: 20px; }
+    .summary { padding: 16px 20px; border-left: 4px solid #16a34a; background: #16a34a12; }
+    article + article { margin-top: 56px; padding-top: 24px; border-top: 1px solid #8886; }
+    footer { margin-top: 40px; font-size: .9rem; }
+    @media (prefers-color-scheme: dark) { a { color: #66df9e; } }
+  </style>
+</head>
+<body>
+  <header>
+    <p><strong>NoHiss — Tab Noise Remover</strong></p>
+    <h1>Política de privacidade<br><span lang="en">Privacy Policy</span></h1>
+    <nav aria-label="Idioma / Language"><a href="#portugues" lang="pt-BR">Português</a><a href="#english" lang="en">English</a></nav>
+  </header>
+  <main>
+    <article id="portugues" lang="pt-BR" aria-labelledby="titulo-pt">
+      <h2 id="titulo-pt">Português</h2>
+      <p>Última atualização: <time datetime="2026-09-27">27 de setembro de 2026</time>.</p>
+      <p class="summary">O NoHiss processa o áudio da aba escolhida no seu dispositivo para reduzir ruídos. A extensão não envia esse áudio ao desenvolvedor nem a serviços de inteligência artificial.</p>
+
+      <h2>Responsável e contato</h2>
+      <p>Esta política descreve a extensão NoHiss, mantida pelo responsável pelo projeto <a href="https://github.com/joaoestella/NoHiss">joaoestella/NoHiss</a>. Para dúvidas sobre privacidade ou suporte, escreva para <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>
+
+      <h2>Áudio e finalidade do processamento</h2>
+      <p>Quando você ativa a limpeza ou inicia uma varredura, o NoHiss captura o áudio da aba selecionada para filtrar ruídos e reproduzir o resultado. O processamento ocorre em memória, dentro do navegador. A extensão não grava arquivos de áudio bruto, não transmite gravações e não solicita acesso ao microfone ou à câmera.</p>
+      <p>O filtro de voz usa o RNNoise incluído na extensão e executado localmente. O áudio não é enviado para treinar modelos. Para encerrar a captura e o processamento, use o botão de parar da extensão ou feche a aba capturada. Fechar apenas o popup não encerra o processamento.</p>
+
+      <h2>Informações armazenadas no navegador</h2>
+      <p>O NoHiss usa o armazenamento local da extensão para guardar idioma, intensidade, modo do filtro, painel escolhido, perfil de ruído aprendido, resultados da varredura e sons selecionados para remoção. Os perfis e resultados são informações numéricas derivadas do espectro do áudio, não gravações de áudio. Um identificador da aba ativa é mantido no armazenamento de sessão para coordenar a captura.</p>
+      <p>Essas informações servem para aplicar o filtro e restaurar suas escolhas. O NoHiss não as envia ao desenvolvedor, não usa sincronização de dados da extensão pela nuvem e não mantém um histórico das páginas visitadas.</p>
+
+      <h2>Compartilhamento, publicidade e uso limitado</h2>
+      <p>A extensão não inclui publicidade, rastreadores ou telemetria. O áudio e os perfis locais não são vendidos, compartilhados com anunciantes ou enviados a terceiros. O desenvolvedor não recebe acesso a esses dados pela extensão.</p>
+      <p>O uso dos dados obtidos pelas permissões da extensão se limita às funções de redução de ruído, reprodução do áudio e configuração escolhidas pelo usuário, em conformidade com a Política de Dados do Usuário da Chrome Web Store, incluindo os requisitos de Uso Limitado.</p>
+
+      <h2>Retenção e exclusão</h2>
+      <p>Os trechos de áudio em memória são temporários e são descartados durante o processamento ou ao encerrar a sessão. Configurações, perfis e resultados da varredura permanecem no armazenamento local até serem substituídos ou excluídos. O botão <strong>Esquecer</strong> apaga o perfil e a varredura salvos, mas não apaga todas as preferências. Uma nova aprendizagem pode criar um novo perfil.</p>
+      <p>Para remover os dados locais da extensão, desinstale o NoHiss pelo gerenciador de extensões do navegador. O identificador de sessão é removido no encerramento normal da captura e o armazenamento de sessão é temporário.</p>
+
+      <h2>Permissões utilizadas</h2>
+      <ul>
+        <li><strong>tabCapture:</strong> obter o áudio da aba selecionada após sua ação na extensão.</li>
+        <li><strong>offscreen:</strong> processar e reproduzir o áudio mesmo com o popup fechado.</li>
+        <li><strong>storage:</strong> guardar as preferências, os perfis e os dados de sessão descritos acima.</li>
+      </ul>
+
+      <h2>Contato por e-mail e página da política</h2>
+      <p>Se você entrar em contato por e-mail, seu endereço e o conteúdo enviado serão tratados para responder à solicitação. Isso é separado do processamento local da extensão e envolve os provedores de e-mail utilizados. Evite enviar gravações ou informações sensíveis desnecessárias. Você pode solicitar a exclusão da correspondência pelo mesmo endereço de contato.</p>
+      <p>Quando esta página é acessada pelo GitHub Pages, o GitHub pode tratar dados técnicos da visita, como o endereço IP, conforme sua <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">política de privacidade</a>. A página não carrega ferramentas de análise, fontes externas nem scripts de terceiros. Acessar esta página não envia o áudio da aba ao GitHub.</p>
+
+      <h2>Atualizações</h2>
+      <p>Esta política será atualizada quando houver mudanças relevantes no tratamento de dados. A data acima identifica a versão publicada. Dúvidas podem ser enviadas para <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>
+    </article>
+
+    <article id="english" lang="en" aria-labelledby="title-en">
+      <h2 id="title-en">English</h2>
+      <p>Last updated: <time datetime="2026-09-27">September 27, 2026</time>.</p>
+      <p class="summary">NoHiss processes audio from your selected tab on your device to reduce noise. The extension does not send this audio to the developer or to artificial intelligence services.</p>
+
+      <h2>Operator and contact</h2>
+      <p>This policy describes the NoHiss extension, maintained by the owner of the <a href="https://github.com/joaoestella/NoHiss">joaoestella/NoHiss</a> project. For privacy questions or support, contact <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>
+
+      <h2>Audio processing and purpose</h2>
+      <p>When you enable noise removal or start a scan, NoHiss captures audio from the selected tab to filter noise and play the result. Processing takes place in memory within your browser. The extension does not save raw audio recordings, transmit recordings, or request microphone or camera access.</p>
+      <p>The voice filter uses RNNoise bundled with the extension and runs locally. Audio is not uploaded to train models. Stop capture and processing using the extension's stop button or by closing the captured tab. Closing only the popup does not stop processing.</p>
+
+      <h2>Information stored in your browser</h2>
+      <p>NoHiss uses local extension storage for the language, strength, filter mode, selected panel, learned noise profile, scan results, and sounds selected for removal. Profiles and scan results contain numerical information derived from the audio spectrum, not audio recordings. An active tab identifier is kept in session storage to coordinate capture.</p>
+      <p>This information is used to apply the filter and restore your choices. NoHiss does not send it to the developer, use cloud synchronization for extension data, or maintain a history of the pages you visit.</p>
+
+      <h2>Sharing, advertising and Limited Use</h2>
+      <p>The extension includes no advertising, trackers or telemetry. Audio and local profiles are not sold, shared with advertisers or sent to third parties. The developer does not receive access to these data through the extension.</p>
+      <p>Data obtained through the extension's permissions are used only for the noise reduction, audio playback and configuration features selected by the user, in accordance with the Chrome Web Store User Data Policy, including its Limited Use requirements.</p>
+
+      <h2>Retention and deletion</h2>
+      <p>In-memory audio buffers are temporary and are discarded during processing or when the session ends. Settings, profiles and scan results remain in local storage until replaced or deleted. The <strong>Forget</strong> button deletes the saved noise profile and scan, but does not delete all preferences. Learning again can create a new profile.</p>
+      <p>To remove the extension's local data, uninstall NoHiss using your browser's extension manager. The session identifier is removed when capture stops normally, and session storage is temporary.</p>
+
+      <h2>Permissions</h2>
+      <ul>
+        <li><strong>tabCapture:</strong> access audio from the selected tab after your action in the extension.</li>
+        <li><strong>offscreen:</strong> process and play audio while the popup is closed.</li>
+        <li><strong>storage:</strong> keep the preferences, profiles and session data described above.</li>
+      </ul>
+
+      <h2>Email support and this policy page</h2>
+      <p>If you contact support by email, your address and the information you send are handled to respond to your request. This is separate from the extension's local processing and involves the email providers used. Avoid sending unnecessary recordings or sensitive information. You can request deletion of correspondence using the same contact address.</p>
+      <p>When this page is accessed through GitHub Pages, GitHub may process technical visit data, such as an IP address, under its <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">privacy statement</a>. This page loads no analytics, external fonts or third-party scripts. Visiting it does not send tab audio to GitHub.</p>
+
+      <h2>Changes</h2>
+      <p>This policy will be updated when data handling changes materially. The date above identifies the published version. Questions can be sent to <a href="mailto:joaoestella.dev@gmail.com">joaoestella.dev@gmail.com</a>.</p>
+    </article>
+  </main>
+  <footer><a href="#portugues">Voltar ao início / Back to top</a> · <a href="https://github.com/joaoestella/NoHiss">GitHub</a></footer>
+</body>
+</html>
