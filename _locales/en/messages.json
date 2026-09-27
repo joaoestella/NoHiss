@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss — Tab Noise Remover",
+    "description": "Extension name shown in Chrome and in the Chrome Web Store."
+  },
+  "extDescription": {
+    "message": "Removes hiss and background noise from any tab's audio (livestreams, videos, classes) in real time. Learns the hiss pattern in 30 s.",
+    "description": "Short description (max 132 characters)."
+  }
+}

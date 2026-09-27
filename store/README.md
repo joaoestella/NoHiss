@@ -18,7 +18,7 @@ Suggested screenshot order (the first one is the most visible):
 4. **learning** – Learns your stream's noise in 30 seconds.
 5. **ai** – Two filters, one click.
 
-The Portuguese set goes in the listing's *Portuguese (Brazil)* localization.
+The Portuguese set goes in the listing's *Portuguese (Brazil)* localization (available because the package declares `en` and `pt_BR` in `_locales/`).
 
 ## How they were made
 
