@@ -284,7 +284,7 @@ async function init() {
   tabId = tab?.id ?? null;
 
   const saved = await chrome.storage.local.get({
-    amount: 0.8,
+    amount: 0.6,
     mode: 'spectral',
     profile: null,
     scan: null,

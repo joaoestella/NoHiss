@@ -16,7 +16,7 @@ const SAMPLE_RATE = 48000;
 
 export async function createDenoiser(
   stream,
-  { mode = 'spectral', amount = 0.8, profile = null, scan = null, selection = [] } = {},
+  { mode = 'spectral', amount = 0.6, profile = null, scan = null, selection = [] } = {},
 ) {
   const ctx = new AudioContext({ sampleRate: SAMPLE_RATE, latencyHint: 'interactive' });
   await Promise.all([

@@ -20,10 +20,13 @@ const RING_MASK = RING - 1;
 const STATS_EVERY = 12000;  // post stats every 250 ms
 const RNN_DELAY_FRAMES = 2; // RNNoise internal delay (measured: 960 samples)
 const HISTORY = RNN_DELAY_FRAMES + 1;
+// Keep some time-aligned original audio even at full strength. RNNoise can
+// classify soft consonants or music as noise; a dry reserve reduces dropouts.
+const MAX_WET = 0.9;
 
 class RnnoiseProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors() {
-    return [{ name: 'mix', defaultValue: 1, minValue: 0, maxValue: 1, automationRate: 'a-rate' }];
+    return [{ name: 'mix', defaultValue: 0.6, minValue: 0, maxValue: 1, automationRate: 'a-rate' }];
   }
 
   constructor() {
@@ -155,7 +158,7 @@ class RnnoiseProcessor extends AudioWorkletProcessor {
     }
 
     for (let i = 0; i < n; i++) {
-      const m = mixConst ? mix[0] : mix[i];
+      const m = (mixConst ? mix[0] : mix[i]) * MAX_WET;
       for (let c = 0; c < output.length; c++) {
         const src = Math.min(c, channels - 1);
         const d = this.dry[src][r];
