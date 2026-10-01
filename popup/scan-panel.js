@@ -2,7 +2,7 @@
 // user pick which ones to remove and draws them on a spectrum.
 
 import { analyze } from '../audio/components.js';
-import { t, getLang } from './i18n.js';
+import { t, getLang, getLocale } from './i18n.js';
 
 const COLORS = ['#22c55e', '#38bdf8', '#f59e0b', '#f472b6', '#a78bfa', '#fb923c', '#2dd4bf', '#facc15'];
 const F_MIN = 50;
@@ -10,10 +10,11 @@ const F_MAX = 20000;
 const xOf = (f, W) => (Math.log(Math.max(f, F_MIN) / F_MIN) / Math.log(F_MAX / F_MIN)) * W;
 
 export function formatHz(f) {
-  const dec = getLang() === 'pt' ? ',' : '.';
   if (f < 1000) return `${Math.round(f)} Hz`;
   const k = f / 1000;
-  return `${(k >= 10 ? k.toFixed(1) : k.toFixed(2)).replace('.', dec)} kHz`;
+  const digits = k >= 10 ? 1 : 2;
+  const num = new Intl.NumberFormat(getLocale(), { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(k);
+  return `${num} kHz`;
 }
 
 export function componentLabel(c) {

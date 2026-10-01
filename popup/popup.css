@@ -33,7 +33,7 @@ h1 { margin: 0; font-size: 15px; font-weight: 650; }
 .sub { margin: 0; color: var(--muted); font-size: 12px; }
 
 .pill {
-  margin-left: auto;
+  margin-inline-start: auto;
   padding: 3px 9px;
   border-radius: 999px;
   background: var(--line);
@@ -45,15 +45,30 @@ h1 { margin: 0; font-size: 15px; font-weight: 650; }
 .pill.on { background: rgba(34, 197, 94, 0.15); color: var(--accent); }
 
 .lang {
-  width: auto;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
   padding: 3px 7px;
-  background: transparent;
   color: var(--muted);
   border: 1px solid var(--line);
   border-radius: 6px;
   font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
 }
-.lang:hover { color: var(--text); }
+.lang:hover, .lang:focus-within { color: var(--text); border-color: var(--muted); }
+/* The real <select> sits invisibly on top, so a click opens the native menu. */
+.lang select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+  font-size: 13px;
+}
+.lang select option { color: #111; }
 
 button {
   width: 100%;
@@ -253,7 +268,7 @@ canvas#scanChart {
 .comp-name { font-weight: 600; }
 .comp-sub { color: var(--muted); font-size: 11px; }
 .comp-level {
-  margin-left: auto;
+  margin-inline-start: auto;
   color: var(--muted);
   font-size: 11px;
   font-variant-numeric: tabular-nums;
@@ -262,3 +277,7 @@ canvas#scanChart {
 
 .privacy-link { display: inline-block; margin-top: 4px; color: var(--muted); text-underline-offset: 3px; }
 .privacy-link:hover, .privacy-link:focus-visible { color: var(--text); }
+
+/* Values like "-36 dB" or "2.00 kHz": take their direction from their own
+   content, so they read correctly inside right-to-left (Arabic) text. */
+.comp-level, .comp-sub, #reduction, #learnLevel, #amountValue, #learnTime, #scanTime { unicode-bidi: plaintext; }

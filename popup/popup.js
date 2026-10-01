@@ -1,10 +1,11 @@
-import { t, setLang, getLang, applyStatic, has } from './i18n.js';
+import { t, setLang, getLang, applyStatic, has, detectLang, LANGUAGES } from './i18n.js';
 import { createScanPanel } from './scan-panel.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
   status: $('status'),
   lang: $('lang'),
+  langCode: $('langCode'),
   toggle: $('toggle'),
   error: $('error'),
   controls: $('controls'),
@@ -275,9 +276,19 @@ function renderAll() {
   setBypassLabel();
 }
 
+// Short label shown in the header; the menu itself lists the native names.
+function renderLangControl() {
+  const code = getLang();
+  els.langCode.textContent = { zh_CN: '简', zh_TW: '繁' }[code] ?? code.toUpperCase();
+  els.lang.value = code;
+}
+
 async function init() {
-  const { lang } = await chrome.storage.local.get({ lang: 'en' });
-  setLang(lang);
+  for (const [code, name] of LANGUAGES) els.lang.add(new Option(name, code));
+  // A language picked in the menu wins; otherwise follow Chrome's language.
+  const { lang } = await chrome.storage.local.get('lang');
+  await setLang(lang ?? detectLang(chrome.i18n.getUILanguage()));
+  renderLangControl();
   applyStatic();
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -305,10 +316,10 @@ async function init() {
   renderAll();
 }
 
-els.lang.addEventListener('click', () => {
-  const next = getLang() === 'en' ? 'pt' : 'en';
-  setLang(next);
-  chrome.storage.local.set({ lang: next });
+els.lang.addEventListener('change', async () => {
+  await setLang(els.lang.value);
+  chrome.storage.local.set({ lang: getLang() });
+  renderLangControl();
   renderAll();
 });
 
