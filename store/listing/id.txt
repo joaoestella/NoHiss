@@ -1,0 +1,16 @@
+NoHiss menghapus desis, dengung, dan bising latar dari audio tab browser mana pun secara real-time. Gunakan untuk siaran langsung, video, kelas online, podcast, dan radio web: situs apa pun yang memutar suara.
+
+CARA KERJANYA
+• Aktifkan di tab yang sedang Anda dengarkan. Dalam 30 detik pertama, NoHiss mempelajari bising yang selalu ada dan hanya menguranginya, sehingga suara dan musik tetap alami.
+• Tab Pindai: menampilkan setiap suara konstan yang ditemukan (desis, dengung listrik 50/60 Hz beserta harmoniknya, siulan tinggi, nada tetap, bising latar) lengkap dengan frekuensi dan levelnya. Centang yang ingin dihapus dan langsung hilang.
+• Dua filter: Desis, pengurangan bising spektral untuk bising konstan, dan Suara (AI), yang memakai jaringan saraf RNNoise, untuk ruangan bising.
+• Pengatur kekuatan dan tombol "tahan untuk mendengar aslinya" untuk membandingkan sebelum dan sesudah.
+• Antarmuka dalam 20 bahasa.
+
+PRIVASI SEJAK AWAL
+Semua pemrosesan audio terjadi di komputer Anda. NoHiss tidak pernah mengirim audio ke mana pun, tidak memiliki akun maupun analitik, dan tidak mengumpulkan data pribadi. Pengaturan dan profil bising yang dipelajari hanya disimpan di browser Anda.
+
+PERLU DIKETAHUI
+• Chrome tidak mengizinkan ekstensi merekam halaman internalnya (chrome://) maupun Chrome Web Store.
+• Bekerja pada satu tab dalam satu waktu.
+• Sumber terbuka: https://github.com/joaoestella/NoHiss

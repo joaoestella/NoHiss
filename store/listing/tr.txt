@@ -1,0 +1,16 @@
+NoHiss, herhangi bir tarayıcı sekmesinin sesindeki cızırtıyı, uğultuyu ve arka plan gürültüsünü gerçek zamanlı olarak giderir. Canlı yayınlarda, videolarda, çevrim içi derslerde, podcast'lerde ve internet radyolarında, yani ses çalan her sitede kullanabilirsiniz.
+
+NASIL ÇALIŞIR
+• Dinlediğiniz sekmede açın. İlk 30 saniyede sürekli var olan gürültüyü öğrenir ve yalnızca onu azaltır; böylece sesler ve müzik doğal kalır.
+• Tara sekmesi: bulunan her sürekli sesi (cızırtı, harmonikleriyle 50/60 Hz şebeke uğultusu, tiz ıslık, sabit tonlar, arka plan gürültüsü) frekansı ve seviyesiyle listeler. Kaldırmak istediğinizi işaretleyin, anında kaybolsun.
+• İki filtre: sürekli gürültüler için spektral gürültü azaltma olan Cızırtı ve gürültülü ortamlar için RNNoise sinir ağıyla çalışan Ses (YZ).
+• Güç ayarı ve önce/sonra karşılaştırması için "orijinali duymak için basılı tutun" düğmesi.
+• 20 dilde arayüz.
+
+TASARIMDAN GİZLİLİK
+Tüm ses işleme bilgisayarınızda gerçekleşir. NoHiss sesi hiçbir yere göndermez, hesap veya analiz aracı içermez ve kişisel veri toplamaz. Ayarlar ve öğrenilen gürültü profili yalnızca tarayıcınızda saklanır.
+
+BİLMENİZDE FAYDA VAR
+• Chrome, uzantıların dahili sayfaları (chrome://) ve Chrome Web Store'u yakalamasına izin vermez.
+• Aynı anda bir sekmede çalışır.
+• Açık kaynak: https://github.com/joaoestella/NoHiss

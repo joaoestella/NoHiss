@@ -1,0 +1,16 @@
+O NoHiss remove chiado, zumbido e ruído de fundo do áudio de qualquer aba do navegador, em tempo real. Use em lives, vídeos, aulas online, podcasts e rádios na web: qualquer site que toque som.
+
+COMO FUNCIONA
+• Ligue na aba que você está ouvindo. Nos primeiros 30 segundos ele aprende o ruído que está sempre lá e reduz só isso, então vozes e música continuam naturais.
+• Aba Escanear: lista cada som constante encontrado (chiado, zumbido da rede elétrica de 50/60 Hz com seus harmônicos, apito agudo, tons constantes, ruído de fundo) com frequência e nível. Marque o que quer tirar e ele some na hora.
+• Dois filtros: Chiado, uma redução de ruído espectral para ruído constante, e Voz (IA), com a rede neural RNNoise, para ambientes barulhentos.
+• Controle de intensidade e botão "segure para ouvir o original" para comparar antes e depois.
+• Interface em 20 idiomas.
+
+PRIVACIDADE DE VERDADE
+Todo o processamento de áudio acontece no seu computador. O NoHiss nunca envia áudio para lugar nenhum, não tem conta nem ferramentas de análise e não coleta dados pessoais. As configurações e o perfil de ruído aprendido ficam só no seu navegador.
+
+BOM SABER
+• O Chrome não permite que extensões capturem páginas internas (chrome://) nem a Chrome Web Store.
+• Funciona em uma aba por vez.
+• Código aberto: https://github.com/joaoestella/NoHiss

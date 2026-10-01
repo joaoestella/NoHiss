@@ -1,0 +1,16 @@
+NoHiss loại bỏ tiếng xì, tiếng ù và tiếng ồn nền khỏi âm thanh của bất kỳ tab trình duyệt nào, theo thời gian thực. Dùng cho livestream, video, lớp học trực tuyến, podcast và radio trên web: mọi trang có phát âm thanh.
+
+CÁCH HOẠT ĐỘNG
+• Bật tiện ích trong tab bạn đang nghe. Trong 30 giây đầu, nó học tiếng ồn luôn hiện diện và chỉ giảm tiếng ồn đó, nên giọng nói và âm nhạc vẫn tự nhiên.
+• Tab Quét: liệt kê mọi âm thanh liên tục tìm thấy (tiếng xì, tiếng ù điện lưới 50/60 Hz cùng các họa âm, tiếng rít cao, âm đều, tiếng ồn nền) kèm tần số và mức âm. Đánh dấu cái muốn loại bỏ và nó biến mất ngay.
+• Hai bộ lọc: Tiếng xì, giảm tiếng ồn theo phổ cho tiếng ồn liên tục, và Giọng nói (AI), dùng mạng nơ-ron RNNoise, cho môi trường ồn ào.
+• Thanh trượt cường độ và nút "giữ để nghe bản gốc" để so sánh trước và sau.
+• Giao diện bằng 20 ngôn ngữ.
+
+RIÊNG TƯ NGAY TỪ THIẾT KẾ
+Mọi xử lý âm thanh đều diễn ra trên máy tính của bạn. NoHiss không bao giờ gửi âm thanh đi đâu, không cần tài khoản, không có công cụ phân tích và không thu thập dữ liệu cá nhân. Cài đặt và hồ sơ tiếng ồn đã học chỉ được lưu trong trình duyệt của bạn.
+
+CẦN BIẾT
+• Chrome không cho phép tiện ích ghi các trang nội bộ (chrome://) hay Cửa hàng Chrome trực tuyến.
+• Hoạt động trên một tab mỗi lần.
+• Mã nguồn mở: https://github.com/joaoestella/NoHiss

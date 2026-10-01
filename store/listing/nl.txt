@@ -1,0 +1,16 @@
+NoHiss verwijdert ruis, brom en achtergrondgeluid uit het geluid van elk browsertabblad, in realtime. Gebruik het bij livestreams, video's, online lessen, podcasts en webradio: elke site die geluid afspeelt.
+
+ZO WERKT HET
+• Zet het aan in het tabblad waar je naar luistert. In de eerste 30 seconden leert het het geluid dat er altijd is en vermindert alleen dat, zodat stemmen en muziek natuurlijk blijven klinken.
+• Tabblad Scannen: toont elk gevonden constant geluid (ruis, netbrom van 50/60 Hz met boventonen, hoge pieptoon, constante tonen, achtergrondgeluid) met frequentie en niveau. Vink aan wat weg moet en het verdwijnt meteen.
+• Twee filters: Ruis, een spectrale ruisonderdrukking voor constant geluid, en Stem (AI), met het neurale netwerk RNNoise, voor lawaaiige ruimtes.
+• Sterkteregelaar en een knop "ingedrukt houden voor het origineel" om voor en na te vergelijken.
+• Interface in 20 talen.
+
+PRIVACY VANAF HET ONTWERP
+Alle audioverwerking gebeurt op je eigen computer. NoHiss stuurt nooit geluid ergens naartoe, heeft geen account en geen analysetools en verzamelt geen persoonsgegevens. Instellingen en het geleerde ruisprofiel blijven alleen in je browser.
+
+GOED OM TE WETEN
+• Chrome staat niet toe dat extensies interne pagina's (chrome://) of de Chrome Web Store opnemen.
+• Werkt op één tabblad tegelijk.
+• Open source: https://github.com/joaoestella/NoHiss

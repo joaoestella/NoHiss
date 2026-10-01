@@ -1,0 +1,16 @@
+NoHiss elimina el siseo, el zumbido y el ruido de fondo del audio de cualquier pestaña del navegador, en tiempo real. Úsalo en directos, vídeos, clases online, pódcast y radio web: cualquier sitio que reproduzca sonido.
+
+CÓMO FUNCIONA
+• Actívalo en la pestaña que estás escuchando. En los primeros 30 segundos aprende el ruido que está siempre presente y reduce solo eso, así la voz y la música suenan naturales.
+• Pestaña Escanear: muestra cada sonido constante encontrado (siseo, zumbido eléctrico de 50/60 Hz con sus armónicos, pitido agudo, tonos constantes, ruido de fondo) con su frecuencia y nivel. Marca lo que quieras quitar y desaparece al instante.
+• Dos filtros: Siseo, una reducción de ruido espectral para ruido constante, y Voz (IA), con la red neuronal RNNoise, para ambientes ruidosos.
+• Control de intensidad y botón "mantén pulsado para oír el original" para comparar el antes y el después.
+• Interfaz en 20 idiomas.
+
+PRIVACIDAD DESDE EL DISEÑO
+Todo el procesamiento de audio ocurre en tu ordenador. NoHiss nunca envía audio a ninguna parte, no tiene cuenta ni analíticas y no recopila datos personales. La configuración y el perfil de ruido aprendido se guardan solo en tu navegador.
+
+A TENER EN CUENTA
+• Chrome no permite que las extensiones capturen sus páginas internas (chrome://) ni la Chrome Web Store.
+• Funciona en una pestaña a la vez.
+• Código abierto: https://github.com/joaoestella/NoHiss

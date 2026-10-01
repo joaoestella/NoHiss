@@ -1,0 +1,16 @@
+NoHiss usuwa szum, brum i hałas w tle z dźwięku dowolnej karty przeglądarki w czasie rzeczywistym. Sprawdza się przy transmisjach na żywo, filmach, lekcjach online, podcastach i radiu internetowym: na każdej stronie, która odtwarza dźwięk.
+
+JAK TO DZIAŁA
+• Włącz je na karcie, której słuchasz. W ciągu pierwszych 30 sekund uczy się hałasu, który jest obecny cały czas, i redukuje tylko jego, więc głosy i muzyka brzmią naturalnie.
+• Karta Skanuj: pokazuje każdy znaleziony stały dźwięk (szum, brum sieciowy 50/60 Hz z harmonicznymi, wysoki pisk, stałe tony, hałas w tle) z częstotliwością i poziomem. Zaznacz, co chcesz usunąć, a zniknie od razu.
+• Dwa filtry: Szum, czyli widmowa redukcja szumu dla stałych dźwięków, oraz Głos (AI), oparty na sieci neuronowej RNNoise, do głośnych pomieszczeń.
+• Suwak siły i przycisk „przytrzymaj, by usłyszeć oryginał" do porównania przed i po.
+• Interfejs w 20 językach.
+
+PRYWATNOŚĆ OD PODSTAW
+Całe przetwarzanie dźwięku odbywa się na Twoim komputerze. NoHiss nigdy nigdzie nie wysyła dźwięku, nie ma konta ani narzędzi analitycznych i nie zbiera danych osobowych. Ustawienia i wyuczony profil szumu zostają wyłącznie w Twojej przeglądarce.
+
+WARTO WIEDZIEĆ
+• Chrome nie pozwala rozszerzeniom przechwytywać stron wewnętrznych (chrome://) ani Chrome Web Store.
+• Działa na jednej karcie naraz.
+• Otwarty kod źródłowy: https://github.com/joaoestella/NoHiss

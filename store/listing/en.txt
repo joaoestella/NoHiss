@@ -1,0 +1,16 @@
+NoHiss removes hiss, hum and background noise from the audio of any browser tab, in real time. Use it on livestreams, videos, online classes, podcasts and web radio: any site that plays sound.
+
+HOW IT WORKS
+• Turn it on in the tab you're listening to. In the first 30 seconds it learns the noise that is always there and reduces only that, so voices and music stay natural.
+• Scan tab: lists every constant sound it found (hiss, mains hum at 50/60 Hz with its harmonics, high-pitched whine, steady tones, background noise) with frequency and level. Check what you want removed and it's gone right away.
+• Two filters: Hiss, a spectral noise reduction for constant noise, and Voice (AI), powered by the RNNoise neural network, for noisy rooms.
+• Strength slider and a "hold to hear the original" button to compare before and after.
+• Interface in 20 languages.
+
+PRIVATE BY DESIGN
+All audio processing happens on your computer. NoHiss never sends audio anywhere, has no account and no analytics, and collects no personal data. Settings and the learned noise profile are stored only in your browser.
+
+GOOD TO KNOW
+• Chrome doesn't allow extensions to capture its internal pages (chrome://) or the Chrome Web Store.
+• Works on one tab at a time.
+• Open source: https://github.com/joaoestella/NoHiss

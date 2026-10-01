@@ -1,0 +1,16 @@
+NoHiss supprime le souffle, le ronflement et le bruit de fond du son de n'importe quel onglet du navigateur, en temps réel. Utilisez-le sur les directs, vidéos, cours en ligne, podcasts et radios web : tout site qui diffuse du son.
+
+COMMENT ÇA MARCHE
+• Activez-le dans l'onglet que vous écoutez. Pendant les 30 premières secondes, il apprend le bruit toujours présent et ne réduit que celui-ci : les voix et la musique restent naturelles.
+• Onglet Analyser : liste chaque son constant trouvé (souffle, ronflement secteur 50/60 Hz et ses harmoniques, sifflement aigu, tonalités continues, bruit de fond) avec sa fréquence et son niveau. Cochez ce que vous voulez supprimer, c'est fait aussitôt.
+• Deux filtres : Souffle, une réduction de bruit spectrale pour les bruits constants, et Voix (IA), basée sur le réseau neuronal RNNoise, pour les pièces bruyantes.
+• Réglage de l'intensité et bouton « maintenir pour entendre l'original » pour comparer avant et après.
+• Interface en 20 langues.
+
+CONFIDENTIALITÉ PAR CONCEPTION
+Tout le traitement audio se fait sur votre ordinateur. NoHiss n'envoie jamais le son nulle part, n'a ni compte ni outil d'analyse et ne collecte aucune donnée personnelle. Les réglages et le profil de bruit appris restent uniquement dans votre navigateur.
+
+BON À SAVOIR
+• Chrome n'autorise pas les extensions à capturer ses pages internes (chrome://) ni le Chrome Web Store.
+• Fonctionne sur un onglet à la fois.
+• Code source ouvert : https://github.com/joaoestella/NoHiss

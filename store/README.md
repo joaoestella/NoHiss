@@ -18,7 +18,38 @@ Suggested screenshot order (the first one is the most visible):
 4. **learning** – Learns your stream's noise in 30 seconds.
 5. **ai** – Two filters, one click.
 
-The Portuguese set goes in the listing's *Portuguese (Brazil)* localization (available because the package declares `en` and `pt_BR` in `_locales/`).
+The Portuguese set goes in the listing's *Portuguese (Brazil)* localization. Other languages fall back to the English screenshots.
+
+## Localized listing
+
+The package declares 53 locales in `_locales/`, so the store shows the translated **name and short
+summary** automatically in the visitor's language. The long **description** is entered per language
+in the dashboard: the texts are in `listing/`, one file per language.
+
+| Dashboard language | File |
+|---|---|
+| English | `listing/en.txt` |
+| Português (Brasil) | `listing/pt_BR.txt` |
+| Español | `listing/es.txt` (also fine for *Español (Latinoamérica)*) |
+| Français | `listing/fr.txt` |
+| Deutsch | `listing/de.txt` |
+| Italiano | `listing/it.txt` |
+| Nederlands | `listing/nl.txt` |
+| Polski | `listing/pl.txt` |
+| Türkçe | `listing/tr.txt` |
+| Русский | `listing/ru.txt` |
+| Українська | `listing/uk.txt` |
+| العربية | `listing/ar.txt` |
+| हिन्दी | `listing/hi.txt` |
+| Bahasa Indonesia | `listing/id.txt` |
+| Tiếng Việt | `listing/vi.txt` |
+| ไทย | `listing/th.txt` |
+| 日本語 | `listing/ja.txt` |
+| 한국어 | `listing/ko.txt` |
+| 中文（简体） | `listing/zh_CN.txt` |
+| 中文（繁體） | `listing/zh_TW.txt` |
+
+Languages without a long description of their own show the English one, under the translated name and summary.
 
 ## How they were made
 

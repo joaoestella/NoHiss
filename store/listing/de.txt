@@ -1,0 +1,16 @@
+NoHiss entfernt Rauschen, Brummen und Hintergrundgeräusche in Echtzeit aus dem Ton jedes Browser-Tabs. Für Livestreams, Videos, Online-Kurse, Podcasts und Webradio: jede Website, die Ton abspielt.
+
+SO FUNKTIONIERT ES
+• Schalte es im Tab ein, den du gerade hörst. In den ersten 30 Sekunden lernt es das Geräusch, das immer da ist, und reduziert nur dieses. Stimmen und Musik klingen weiterhin natürlich.
+• Tab „Scannen": listet jedes gefundene Dauergeräusch auf (Rauschen, 50/60-Hz-Netzbrummen mit Obertönen, hohes Pfeifen, Dauertöne, Hintergrundgeräusche) mit Frequenz und Pegel. Markiere, was weg soll, und es verschwindet sofort.
+• Zwei Filter: Rauschen, eine spektrale Rauschunterdrückung für gleichmäßige Geräusche, und Stimme (KI) mit dem neuronalen Netz RNNoise für laute Umgebungen.
+• Stärkeregler und eine Taste „Halten, um das Original zu hören" für den Vorher-nachher-Vergleich.
+• Oberfläche in 20 Sprachen.
+
+DATENSCHUTZ VON GRUND AUF
+Die gesamte Audioverarbeitung läuft auf deinem Computer. NoHiss sendet niemals Ton irgendwohin, hat kein Konto und keine Analyse-Tools und sammelt keine personenbezogenen Daten. Einstellungen und das gelernte Rauschprofil bleiben nur in deinem Browser.
+
+GUT ZU WISSEN
+• Chrome erlaubt Erweiterungen nicht, interne Seiten (chrome://) oder den Chrome Web Store aufzunehmen.
+• Funktioniert jeweils in einem Tab.
+• Open Source: https://github.com/joaoestella/NoHiss

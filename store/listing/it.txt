@@ -1,0 +1,16 @@
+NoHiss rimuove fruscio, ronzio e rumore di fondo dall'audio di qualsiasi scheda del browser, in tempo reale. Usalo con dirette, video, lezioni online, podcast e web radio: qualsiasi sito che riproduce suoni.
+
+COME FUNZIONA
+• Attivalo nella scheda che stai ascoltando. Nei primi 30 secondi impara il rumore sempre presente e riduce solo quello, così voci e musica restano naturali.
+• Scheda Analizza: elenca ogni suono costante trovato (fruscio, ronzio di rete a 50/60 Hz con le sue armoniche, fischio acuto, toni costanti, rumore di fondo) con frequenza e livello. Seleziona ciò che vuoi rimuovere e sparisce subito.
+• Due filtri: Fruscio, una riduzione del rumore spettrale per i rumori costanti, e Voce (IA), basata sulla rete neurale RNNoise, per ambienti rumorosi.
+• Regolazione dell'intensità e pulsante "tieni premuto per sentire l'originale" per confrontare prima e dopo.
+• Interfaccia in 20 lingue.
+
+PRIVACY FIN DALLA PROGETTAZIONE
+Tutta l'elaborazione audio avviene sul tuo computer. NoHiss non invia mai l'audio da nessuna parte, non ha account né strumenti di analisi e non raccoglie dati personali. Le impostazioni e il profilo del rumore appreso restano solo nel tuo browser.
+
+DA SAPERE
+• Chrome non consente alle estensioni di acquisire le pagine interne (chrome://) né il Chrome Web Store.
+• Funziona su una scheda alla volta.
+• Open source: https://github.com/joaoestella/NoHiss
