@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Kohinanpoisto Välilehtien Ääneen",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Poista kohina, hurina ja taustamelu minkä tahansa välilehden äänestä reaaliajassa: striimit, videot, luennot. 100 % paikallisesti.",
+    "description": "Short description, max 132 characters."
+  }
+}

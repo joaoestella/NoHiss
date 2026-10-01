@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Triukšmo Šalinimas iš Skirtukų",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Pašalinkite šnypštimą, ūžimą ir foninį triukšmą iš bet kurio skirtuko garso realiuoju laiku: transliacijos, vaizdo įrašai. Vietoje.",
+    "description": "Short description, max 132 characters."
+  }
+}

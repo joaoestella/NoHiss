@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss：标签页音频降噪",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "实时去除任意标签页音频中的嘶嘶声、嗡嗡声和背景噪音：直播、视频、网课都适用。所有处理都在你的设备上完成。",
+    "description": "Short description, max 132 characters."
+  }
+}

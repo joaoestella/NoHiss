@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: የትር ድምፅ ጫጫታ አስወጋጅ",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "ከማንኛውም ትር ድምፅ ሹክሹክታ፣ ጉምጉምታ እና የበስተጀርባ ጫጫታ በቅጽበት ያስወግዱ፦ ቀጥታ ስርጭት፣ ቪዲዮ፣ ትምህርት። በመሣሪያዎ ላይ ብቻ ይሠራል።",
+    "description": "Short description, max 132 characters."
+  }
+}

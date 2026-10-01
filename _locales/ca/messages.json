@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Eliminador de Soroll per a Pestanyes",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Elimina el xiuxiueig, el brunzit i el soroll de fons de l'àudio de qualsevol pestanya en temps real: directes, vídeos, classes.",
+    "description": "Short description, max 132 characters."
+  }
+}

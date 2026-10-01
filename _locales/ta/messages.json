@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: டேப் ஆடியோவுக்கான இரைச்சல் நீக்கி",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "எந்த டேப்பின் ஆடியோவிலும் ஹிஸ், ஹம், பின்னணி இரைச்சலை நேரலையில் நீக்குங்கள்: லைவ், வீடியோ, வகுப்புகள். உங்கள் சாதனத்திலேயே.",
+    "description": "Short description, max 132 characters."
+  }
+}

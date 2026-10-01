@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Odstranjevanje Šuma iz Zavihkov",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Odstranite šum, brnenje in hrup v ozadju iz zvoka katerega koli zavihka v realnem času: prenosi, videi, predavanja. 100 % lokalno.",
+    "description": "Short description, max 132 characters."
+  }
+}

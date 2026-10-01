@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Αφαίρεση Θορύβου από Καρτέλες",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Αφαιρέστε συριγμό, βουητό και θόρυβο φόντου από τον ήχο κάθε καρτέλας σε πραγματικό χρόνο: live, βίντεο, μαθήματα. 100% τοπικά.",
+    "description": "Short description, max 132 characters."
+  }
+}

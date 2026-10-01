@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Brusborttagning för Flikar",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Ta bort brus, brum och bakgrundsljud från ljudet i valfri flik i realtid: livesändningar, videor, lektioner. Körs 100 % lokalt.",
+    "description": "Short description, max 132 characters."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Ruisverwijderaar voor Tabbladen",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Verwijder ruis, brom en achtergrondgeluid uit het geluid van elk tabblad in realtime: streams, video's, lessen. 100% lokaal.",
+    "description": "Short description, max 132 characters."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Pantanggal ng Ingay sa Audio ng Tab",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Alisin ang sitsit, ugong at ingay sa background sa audio ng anumang tab nang real time: livestream, video, klase. 100% sa device mo.",
+    "description": "Short description, max 132 characters."
+  }
+}

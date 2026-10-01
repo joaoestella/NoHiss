@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Eliminador de Ruido para Pestañas",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Elimina siseo, zumbido y ruido de fondo del audio de cualquier pestaña en tiempo real: en vivo, videos, clases. 100% en tu equipo.",
+    "description": "Short description, max 132 characters."
+  }
+}

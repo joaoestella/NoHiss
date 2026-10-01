@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: 탭 오디오 노이즈 제거",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "모든 탭의 오디오에서 히스, 험, 배경 소음을 실시간으로 제거하세요. 라이브 방송, 동영상, 강의에 사용하세요. 모든 처리는 내 기기에서 이루어집니다.",
+    "description": "Short description, max 132 characters."
+  }
+}

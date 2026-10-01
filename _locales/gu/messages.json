@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: ટેબ ઑડિયો માટે નૉઇઝ રિમૂવર",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "કોઈપણ ટેબના ઑડિયોમાંથી હિસ, હમ અને બૅકગ્રાઉન્ડ અવાજ રિયલ ટાઇમમાં દૂર કરો: લાઇવ, વીડિયો, ક્લાસ. 100% તમારા ઉપકરણ પર.",
+    "description": "Short description, max 132 characters."
+  }
+}

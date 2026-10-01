@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Removedor de Ruído para Separadores",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Remova chiado, zumbido e ruído de fundo do áudio de qualquer separador em tempo real: diretos, vídeos, aulas. 100% no dispositivo.",
+    "description": "Short description, max 132 characters."
+  }
+}

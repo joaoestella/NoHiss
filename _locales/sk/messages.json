@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Odstránenie Šumu zo Zvuku Kariet",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Odstráňte šum, brum a hluk v pozadí zo zvuku ľubovoľnej karty v reálnom čase: prenosy, videá, výučba. Všetko beží len vo vašom PC.",
+    "description": "Short description, max 132 characters."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Шумозаглушення для вкладок",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Прибирає шипіння, гул і фоновий шум зі звуку будь-якої вкладки в реальному часі: трансляції, відео, уроки. Працює 100% локально.",
+    "description": "Short description, max 132 characters."
+  }
+}

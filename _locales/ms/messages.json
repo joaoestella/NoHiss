@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Pembuang Hingar untuk Audio Tab",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Buang desis, dengung dan hingar latar daripada audio mana-mana tab secara masa nyata: siaran langsung, video, kelas. 100% setempat.",
+    "description": "Short description, max 132 characters."
+  }
+}

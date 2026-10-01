@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Rauschentferner für Tab-Audio",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Entfernt Rauschen, Brummen und Hintergrundgeräusche aus dem Ton jedes Tabs in Echtzeit: Streams, Videos, Kurse. 100 % lokal.",
+    "description": "Short description, max 132 characters."
+  }
+}

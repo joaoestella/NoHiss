@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Zajszűrő a Lapok Hangjához",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Távolítsa el a sistergést, búgást és háttérzajt bármely lap hangjából valós időben: élő adások, videók, órák. 100% helyben fut.",
+    "description": "Short description, max 132 characters."
+  }
+}

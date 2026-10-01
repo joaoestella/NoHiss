@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: مزيل الضوضاء لصوت علامات التبويب",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "أزل الهسهسة والطنين وضوضاء الخلفية من صوت أي علامة تبويب في الوقت الفعلي: بث مباشر، فيديو، دروس. يعمل بالكامل على جهازك.",
+    "description": "Short description, max 132 characters."
+  }
+}

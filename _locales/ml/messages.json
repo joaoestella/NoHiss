@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: ടാബ് ഓഡിയോയിലെ നോയ്സ് നീക്കാൻ",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "ഏത് ടാബിന്റെയും ഓഡിയോയിൽ നിന്ന് ഹിസ്, ഹം, പശ്ചാത്തല ശബ്ദം തത്സമയം നീക്കുക: ലൈവ്, വീഡിയോ, ക്ലാസുകൾ. നിങ്ങളുടെ ഉപകരണത്തിൽ മാത്രം.",
+    "description": "Short description, max 132 characters."
+  }
+}

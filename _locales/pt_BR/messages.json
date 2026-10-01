@@ -1,10 +1,10 @@
 {
   "extName": {
-    "message": "NoHiss — Removedor de Ruído da Aba",
-    "description": "Nome da extensão no Chrome e na Chrome Web Store."
+    "message": "NoHiss: Removedor de Ruído para Abas",
+    "description": "Extension name (Chrome Web Store title)."
   },
   "extDescription": {
-    "message": "Remove chiado e ruído de fundo do áudio de qualquer aba (lives, vídeos, aulas) em tempo real. Aprende o padrão do chiado em 30 s.",
-    "description": "Descrição curta (máx. 132 caracteres)."
+    "message": "Remova chiado, zumbido e ruído de fundo do áudio de qualquer aba em tempo real: lives, vídeos e aulas. Roda 100% no seu computador.",
+    "description": "Short description, max 132 characters."
   }
 }

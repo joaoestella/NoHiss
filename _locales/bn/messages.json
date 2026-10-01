@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: ট্যাবের অডিওর নয়েজ রিমুভার",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "যেকোনো ট্যাবের অডিও থেকে হিস, হাম আর ব্যাকগ্রাউন্ড নয়েজ রিয়েল টাইমে সরান: লাইভ, ভিডিও, ক্লাস। পুরোটাই আপনার ডিভাইসে চলে।",
+    "description": "Short description, max 132 characters."
+  }
+}

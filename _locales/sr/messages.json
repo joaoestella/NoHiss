@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Уклањање шума из картица",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Уклоните шум, брујање и позадинску буку из звука било које картице у реалном времену: преноси, видео, часови. Ради 100% локално.",
+    "description": "Short description, max 132 characters."
+  }
+}

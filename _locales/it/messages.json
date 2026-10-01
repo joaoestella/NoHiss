@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Rimozione Rumore per le Schede",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Rimuovi fruscio, ronzio e rumore di fondo dall'audio di qualsiasi scheda in tempo reale: dirette, video, lezioni. 100% sul tuo PC.",
+    "description": "Short description, max 132 characters."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: टॅब ऑडिओसाठी नॉइज रिमूव्हर",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "कोणत्याही टॅबच्या आवाजातून हिस, हम आणि पार्श्वभूमीचा आवाज रिअल टाइममध्ये काढा: लाइव्ह, व्हिडिओ, क्लास. 100% तुमच्या डिव्हाइसवर.",
+    "description": "Short description, max 132 characters."
+  }
+}

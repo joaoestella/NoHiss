@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: टैब ऑडियो के लिए नॉइज़ रिमूवर",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "किसी भी टैब की आवाज़ से सरसराहट, भिनभिनाहट और बैकग्राउंड शोर रियल टाइम में हटाएँ: लाइव, वीडियो, क्लास। 100% आपके डिवाइस पर।",
+    "description": "Short description, max 132 characters."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Støjfjerner til Fanelyd",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Fjern sus, brum og baggrundsstøj fra lyden i enhver fane i realtid: livestreams, videoer, undervisning. Kører 100 % lokalt.",
+    "description": "Short description, max 132 characters."
+  }
+}

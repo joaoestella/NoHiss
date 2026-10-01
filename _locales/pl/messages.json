@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Usuwanie Szumów z Kart",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Usuwaj szum, brum i hałas w tle z dźwięku dowolnej karty w czasie rzeczywistym: transmisje, filmy, lekcje. 100% lokalnie.",
+    "description": "Short description, max 132 characters."
+  }
+}

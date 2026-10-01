@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Премахване на шум от раздели",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Премахвайте съскане, бръмчене и фонов шум от звука на всеки раздел в реално време: стриймове, видео, уроци. 100% локално.",
+    "description": "Short description, max 132 characters."
+  }
+}

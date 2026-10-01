@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: הסרת רעשים מאודיו של כרטיסיות",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "הסירו רחש, זמזום ורעשי רקע מהשמע של כל כרטיסייה בזמן אמת: שידורים חיים, סרטונים, שיעורים. פועל 100% במכשיר שלכם.",
+    "description": "Short description, max 132 characters."
+  }
+}

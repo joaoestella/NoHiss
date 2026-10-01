@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Müraeemaldus Vahekaartidelt",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Eemalda kahin, sumin ja taustamüra mis tahes vahekaardi helist reaalajas: otseülekanded, videod, tunnid. Töötab 100% kohapeal.",
+    "description": "Short description, max 132 characters."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss：分頁音訊降噪",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "即時去除任何分頁音訊中的嘶嘶聲、嗡嗡聲和背景噪音：直播、影片、課程都適用。所有處理都在你的裝置上完成。",
+    "description": "Short description, max 132 characters."
+  }
+}

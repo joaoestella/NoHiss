@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Eliminare Zgomot din File",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Elimină șuieratul, bâzâitul și zgomotul de fundal din sunetul oricărei file în timp real: live-uri, videoclipuri, cursuri. Local.",
+    "description": "Short description, max 132 characters."
+  }
+}

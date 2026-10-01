@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss : Suppresseur de Bruit pour Onglets",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Supprimez souffle, ronflement et bruit de fond du son de tout onglet en temps réel : directs, vidéos, cours. 100 % en local.",
+    "description": "Short description, max 132 characters."
+  }
+}

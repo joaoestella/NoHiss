@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Khử Tiếng Ồn cho Âm Thanh Tab",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Loại bỏ tiếng xì, tiếng ù và tiếng ồn nền khỏi âm thanh của mọi tab theo thời gian thực: livestream, video, lớp học. Chạy cục bộ.",
+    "description": "Short description, max 132 characters."
+  }
+}

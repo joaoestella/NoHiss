@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: ಟ್ಯಾಬ್ ಆಡಿಯೊ ಶಬ್ದ ನಿವಾರಕ",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "ಯಾವುದೇ ಟ್ಯಾಬ್‌ನ ಆಡಿಯೊದಿಂದ ಹಿಸ್, ಹಮ್ ಮತ್ತು ಹಿನ್ನೆಲೆ ಶಬ್ದವನ್ನು ನೈಜ ಸಮಯದಲ್ಲಿ ತೆಗೆಯಿರಿ: ಲೈವ್, ವಿಡಿಯೋ, ತರಗತಿ. ನಿಮ್ಮ ಸಾಧನದಲ್ಲೇ.",
+    "description": "Short description, max 132 characters."
+  }
+}

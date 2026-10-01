@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Kiondoa Kelele kwa Sauti ya Kichupo",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Ondoa mzomeo, mvumo na kelele za nyuma kwenye sauti ya kichupo chochote papo hapo: matangazo, video, madarasa. 100% kwenye kifaa.",
+    "description": "Short description, max 132 characters."
+  }
+}

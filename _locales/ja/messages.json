@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss：タブ音声のノイズ除去",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "あらゆるタブの音声からヒスノイズ、ハム音、背景ノイズをリアルタイムで除去。ライブ配信、動画、授業に。処理はすべてお使いのPC上で行われます。",
+    "description": "Short description, max 132 characters."
+  }
+}

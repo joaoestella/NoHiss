@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: ట్యాబ్ ఆడియో నాయిస్ రిమూవర్",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "ఏ ట్యాబ్ ఆడియో నుండైనా హిస్, హమ్, బ్యాక్‌గ్రౌండ్ శబ్దాన్ని రియల్ టైమ్‌లో తొలగించండి: లైవ్, వీడియోలు, క్లాసులు. మీ పరికరంలోనే.",
+    "description": "Short description, max 132 characters."
+  }
+}

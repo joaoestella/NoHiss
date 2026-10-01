@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: ตัวลบเสียงรบกวนสำหรับเสียงในแท็บ",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "ลบเสียงซ่า เสียงฮัม และเสียงรบกวนพื้นหลังจากเสียงของทุกแท็บแบบเรียลไทม์: ไลฟ์ วิดีโอ คลาสเรียน ทำงานบนเครื่องของคุณ 100%",
+    "description": "Short description, max 132 characters."
+  }
+}

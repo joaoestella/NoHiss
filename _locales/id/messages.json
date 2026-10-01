@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: Penghapus Bising untuk Audio Tab",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "Hapus desis, dengung, dan bising latar dari audio tab mana pun secara real-time: siaran langsung, video, kelas. 100% di perangkat.",
+    "description": "Short description, max 132 characters."
+  }
+}

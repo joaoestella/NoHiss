@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoHiss: حذف نویز از صدای زبانه‌ها",
+    "description": "Extension name (Chrome Web Store title)."
+  },
+  "extDescription": {
+    "message": "خش‌خش، وزوز و نویز پس‌زمینه را در لحظه از صدای هر زبانه حذف کنید: پخش زنده، ویدیو، کلاس. کاملاً روی دستگاه خودتان اجرا می‌شود.",
+    "description": "Short description, max 132 characters."
+  }
+}
