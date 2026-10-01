@@ -2,6 +2,10 @@
 
 A Chrome extension that **removes hiss and background noise from any tab's audio, in real time** — livestreams, videos, recorded classes, podcasts.
 
+**[Install NoHiss from the Chrome Web Store](https://chromewebstore.google.com/detail/dncenkgelggalfgabeinbjeginhmcfgo)** · free · runs 100% on your computer · 20 languages
+
+![NoHiss removing hiss from a livestream](store/screenshots/en/screenshot-1-clean.png)
+
 When you turn it on without a saved profile, it listens to the first 30 seconds of the stream and estimates, band by band, the sound that is there all the time. It reduces that pattern while aiming to preserve voice and music. The **Scan** tab goes further: it lists constant sounds it found (hiss, mains hum, a whine, a steady beep…) and you pick which ones to remove. Everything runs on your computer.
 
 ## Features
@@ -17,7 +21,9 @@ When you turn it on without a saved profile, it listens to the first 30 seconds 
 - Meter showing how much hiss is being removed.
 - ~21 ms of processing latency in Hiss and ~30 ms in Voice (AI), plus browser/device buffering.
 
-## Install (developer mode)
+## Install
+
+The easiest way is the **[Chrome Web Store](https://chromewebstore.google.com/detail/dncenkgelggalfgabeinbjeginhmcfgo)**. To run it from the source code instead (developer mode):
 
 1. Download or clone this folder.
 2. Open `chrome://extensions`.
@@ -115,9 +121,11 @@ AudioWorklet in Chromium, synthesized speech + hiss (10 dB SNR), 45 s of audio:
 
 The voice kept 99% of its level with all tones notched. Speech with only hiss, and music with changing notes, produced no tones. A synthetic loop of the same few chords did show two of its notes as steady tones, which is exactly why the scan lets you choose: you see them and leave them unchecked.
 
-## Language
+## Languages
 
-The UI is in English by default. The button in the popup header switches to Brazilian Portuguese (and back); the choice is remembered.
+The popup is available in 20 languages: English, Portuguese, Spanish, French, German, Italian, Dutch, Polish, Turkish, Russian, Ukrainian, Arabic (right-to-left), Hindi, Indonesian, Vietnamese, Thai, Japanese, Korean, Simplified and Traditional Chinese. It follows Chrome's language automatically; the globe menu in the header switches it, and the choice is remembered. The strings live in `popup/locales/<code>.json`.
+
+The extension's name and short description are translated into the 53 languages the Chrome Web Store supports (`_locales/`), so the store page shows them in the visitor's language.
 
 ## Limitations
 
