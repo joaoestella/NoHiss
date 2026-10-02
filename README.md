@@ -6,16 +6,17 @@ A Chrome extension that **removes hiss and background noise from any tab's audio
 
 ![NoHiss removing hiss from a livestream](store/screenshots/en/screenshot-1-clean.png)
 
-When you turn it on without a saved profile, it listens to the first 30 seconds of the stream and estimates, band by band, the sound that is there all the time. It reduces that pattern while aiming to preserve voice and music. The **Scan** tab goes further: it lists constant sounds it found (hiss, mains hum, a whine, a steady beep…) and you pick which ones to remove. Everything runs on your computer.
+Press the big button and it starts cleaning right away. Without a saved profile, it also listens to the first 30 seconds and estimates, band by band, the sound that is there all the time, then reduces that pattern while aiming to preserve voice and music. In **Pro**, **Scan** goes further: it lists constant sounds it found (hiss, mains hum, a whine, a steady beep…) and you pick which ones to remove. Everything runs on your computer.
 
 ## Features
 
-- Turn it on and off per tab with one click.
+- **Simple and Pro.** Simple is one big on/off button plus Light / Medium / Strong. Pro shows the filters, the hiss fingerprint, Scan and the exact strength.
+- Works on the page you open it on, with one click.
 - **Two filters:**
   - **Hiss** (default): spectral subtraction built for constant noise (bad mic, tape, radio). Uses gentler attenuation and smooth transitions to help preserve voice and music.
   - **Voice (AI):** [RNNoise](https://github.com/xiph/rnnoise), a neural network trained on voice. Removes varying noise, but may wipe out music.
 - **Learns the hiss automatically** in the first 30 s, with a "hiss fingerprint" chart of the noise spectrum it found. The profile is saved for next time.
-- **Scan tab:** lists every constant sound with its level and a spectrum chart — mains hum with its harmonics, steady tones, high-pitched whines, hiss, background noise, rumble. Check what you want removed; it applies right away and leaves the rest alone.
+- **Scan (Pro):** lists every constant sound with its level and a spectrum chart — mains hum with its harmonics, steady tones, high-pitched whines, hiss, background noise, rumble. Check what you want removed; it applies right away and leaves the rest alone.
 - **Strength:** starts at 60%; Hiss limits per-band attenuation to 18 dB at full strength. Voice (AI) retains at least 10% of the time-aligned original audio to soften model dropouts. Some residual noise is intentional.
 - **A/B comparison:** hold the button to hear the original.
 - Meter showing how much hiss is being removed.
@@ -29,8 +30,8 @@ The easiest way is the **[Chrome Web Store](https://chromewebstore.google.com/de
 2. Open `chrome://extensions`.
 3. Turn on **Developer mode** (top-right corner).
 4. Click **Load unpacked** and select the project folder.
-5. Pin the icon, open the stream's tab, click the icon and then the button to clean the tab's audio.
-6. Leave it playing for 30 s while it learns the hiss. To choose exactly what to remove, open the **Scan** tab.
+5. Pin the icon, open the page with the video or stream, click the icon and press the big button.
+6. It cleans right away and fine-tunes itself during the first 30 s. To choose exactly what to remove, switch to **Pro** and open **Scan**.
 
 Works on Chrome 116+ and Chromium-based browsers (Edge, Brave, Opera).
 

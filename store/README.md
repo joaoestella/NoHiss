@@ -12,11 +12,11 @@ Everything the store listing asks for, ready to upload.
 
 Suggested screenshot order (the first one is the most visible):
 
-1. **clean** – Remove the hiss. Keep the voice.
-2. **scan** – See every sound that never stops.
+1. **clean** – Remove the hiss. Keep the voice. (Simple view)
+2. **scan** – Pro: see every sound that never stops.
 3. **picked** – Pick exactly what to remove.
-4. **learning** – Learns your stream's noise in 30 seconds.
-5. **ai** – Two filters, one click.
+4. **learning** – Works right away. (Simple view, first 30 s)
+5. **ai** – Simple or Pro, you choose.
 
 The Portuguese set goes in the listing's *Portuguese (Brazil)* localization. Other languages fall back to the English screenshots.
 
@@ -53,7 +53,7 @@ Languages without a long description of their own show the English one, under th
 
 ## How they were made
 
-The popup in every screenshot is the real extension (version 1.3.0) running in Chromium, fed with a
+The popup in every screenshot is the real extension (version 1.5.0) running in Chromium, fed with a
 synthetic "livestream" (speech with hiss, 60 Hz mains hum with harmonics, a 1 kHz beep and a
 15.7 kHz whine), captured at 2× and placed in a generic browser window. The meter values and the
 Scan results are the ones the extension actually showed. The text is set in Inter, standing in for

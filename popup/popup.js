@@ -3,7 +3,16 @@ import { createScanPanel } from './scan-panel.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
-  status: $('status'),
+  hero: $('hero'),
+  heroTitle: $('heroTitle'),
+  heroSub: $('heroSub'),
+  chips: $('chips'),
+  ringFill: $('ringFill'),
+  toggleWord: $('toggleWord'),
+  viewButtons: [...document.querySelectorAll('#view button')],
+  simple: $('simple'),
+  presets: [...document.querySelectorAll('.presets button')],
+  compareText: $('compareText'),
   lang: $('lang'),
   langCode: $('langCode'),
   toggle: $('toggle'),
@@ -47,10 +56,18 @@ const els = {
 };
 
 const LEARN_SECONDS = 30;
+const RING = 295.3; // circumference of the progress ring (r = 47)
+
+// "Simple" always runs the automatic hiss filter with three strength presets;
+// "Pro" shows the filters, the scan and the exact strength.
+const PRESETS = [0.35, 0.6, 0.85];
 
 let tabId = null;
 let running = false;
-let mode = 'spectral';
+let mode = 'spectral';   // the filter picked in Pro
+let view = 'simple';
+let amount = 0.6;
+let shownDb = null;      // smoothed reduction for the big readout
 let currentTab = 'clean';
 let scan = null;        // last scan of constant sounds (from storage)
 let selection = [];     // ids of the sounds picked in the Scan tab
@@ -86,12 +103,22 @@ function showError(codeOrText) {
   els.error.hidden = !lastError;
 }
 
+// The filter that actually runs: Simple always uses the automatic hiss filter.
+const activeMode = () => (view === 'simple' ? 'spectral' : mode);
+
 function render() {
-  els.status.textContent = t(running ? 'status.on' : activeElsewhere ? 'status.elsewhere' : 'status.off');
-  els.status.classList.toggle('on', running);
-  els.toggle.textContent = t(running ? 'toggle.stop' : activeElsewhere ? 'toggle.switch' : 'toggle.start');
-  els.toggle.classList.toggle('stop', running);
+  const state = running ? 'on' : activeElsewhere ? 'elsewhere' : 'off';
+  els.hero.dataset.state = state;
+  els.toggle.setAttribute('aria-pressed', String(running));
+  const word = t(running ? 'power.off' : activeElsewhere ? 'power.switch' : 'power.on');
+  els.toggleWord.textContent = word;
+  els.toggle.setAttribute('aria-label', word);
+  els.chips.hidden = state !== 'off';
   els.controls.setAttribute('aria-disabled', String(!running));
+  els.compare.hidden = !running;
+  els.simple.hidden = view !== 'simple' || !running;
+  els.controls.hidden = view !== 'pro';
+  renderHero();
 
   if (running && !statsTimer) {
     statsTimer = setInterval(pollStats, 250);
@@ -101,6 +128,46 @@ function render() {
     statsTimer = null;
     renderStats(null);
   }
+}
+
+// Title + one short line under it. While the first 30 s pass runs, the filter
+// is already working; the ring around the button shows it getting better.
+function renderHero() {
+  const learning = running && lastLearn?.status === 'learning';
+  const progress = learning ? lastLearn.progress || 0 : 0;
+  els.ringFill.style.strokeDashoffset = String(RING * (1 - progress));
+
+  if (!running) {
+    els.heroTitle.textContent = t(activeElsewhere ? 'hero.elsewhere' : 'hero.title');
+    els.heroSub.textContent = activeElsewhere ? t('hero.elsewhereSub') : view === 'pro' ? t('hero.offSub') : '';
+    return;
+  }
+  els.heroTitle.textContent = t('hero.on');
+  let sub;
+  if (learning) {
+    sub = t('hero.learning', { s: Math.max(1, Math.ceil((1 - progress) * LEARN_SECONDS)) });
+  } else if (lastLearn?.error) {
+    sub = t(`learn.error.${lastLearn.error}`);
+  } else if (view === 'pro') {
+    sub = t('hero.tapOff');
+  } else if (shownDb !== null && shownDb >= 1) {
+    sub = t('hero.removed', { db: shownDb >= 40 ? '40+' : Math.round(shownDb) });
+  } else {
+    sub = t('hero.working');
+  }
+  els.heroSub.textContent = sub;
+}
+
+function renderView() {
+  document.body.classList.toggle('pro-view', view === 'pro');
+  document.body.classList.toggle('simple-view', view === 'simple');
+  for (const b of els.viewButtons) b.setAttribute('aria-checked', String(b.dataset.view === view));
+}
+
+function renderPresets() {
+  // Highlight the preset closest to the current strength (it may come from Pro).
+  const near = PRESETS.reduce((a, b) => (Math.abs(b - amount) < Math.abs(a - amount) ? b : a));
+  for (const b of els.presets) b.setAttribute('aria-checked', String(Number(b.dataset.amount) === near));
 }
 
 function renderMode() {
@@ -155,6 +222,7 @@ function toggleComponent(id, checked) {
 function renderStats(stats) {
   lastStats = stats;
   if (!stats) {
+    shownDb = null;
     els.reduction.textContent = '— dB';
     els.reductionBar.style.width = '0%';
     els.voiceDot.classList.remove('on');
@@ -163,7 +231,7 @@ function renderStats(stats) {
   }
   // Custom mode with only tones picked: notch filters remove them completely,
   // there's no broadband estimate to measure, so show how many are filtered.
-  if (mode === 'custom') {
+  if (activeMode() === 'custom') {
     const picked = scanPanel.components.filter((c) => selection.includes(c.id));
     if (!picked.some((c) => c.kind === 'band')) {
       els.reduction.textContent = t('meter.tones', { n: picked.length });
@@ -175,6 +243,7 @@ function renderStats(stats) {
   // AI mode, the level difference between input and output.
   const raw = typeof stats.noiseReductionDb === 'number' ? stats.noiseReductionDb : stats.reductionDb;
   const db = Math.max(0, raw);
+  shownDb = shownDb === null ? db : shownDb * 0.8 + db * 0.2;
   // On hiss-only stretches the reduction goes past 35 dB; above 40 it's silence anyway.
   els.reduction.textContent = db >= 40 ? '40+ dB' : `${db.toFixed(1)} dB`;
   els.reductionBar.style.width = `${Math.min(100, (db / 30) * 100)}%`;
@@ -187,6 +256,7 @@ function renderStats(stats) {
 function renderLearn(learn) {
   lastLearn = learn;
   renderScan();
+  renderHero();
   const status = learn?.status ?? 'idle';
   els.learnIdle.hidden = status !== 'idle';
   els.learnRunning.hidden = status !== 'learning';
@@ -261,12 +331,15 @@ async function pollStats() {
 }
 
 function renderAmount(value) {
+  amount = value;
+  renderPresets();
   els.amount.value = String(Math.round(value * 100));
   els.amountValue.textContent = `${Math.round(value * 100)}%`;
 }
 
 function renderAll() {
   applyStatic();
+  renderView();
   render();
   renderTabs();
   renderMode();
@@ -301,8 +374,11 @@ async function init() {
     scan: null,
     selection: [],
     tab: 'clean',
+    view: null,
   });
   mode = saved.mode;
+  // People who already used the advanced filters keep seeing them.
+  view = saved.view ?? (saved.mode !== 'spectral' || saved.selection.length ? 'pro' : 'simple');
   scan = saved.scan;
   selection = saved.selection;
   currentTab = saved.tab;
@@ -379,16 +455,31 @@ for (const b of els.modeButtons) {
     renderMode();
     renderScan();
     chrome.storage.local.set({ mode });
-    toOffscreen({ type: 'set-params', mode });
+    toOffscreen({ type: 'set-params', mode: activeMode() });
   });
 }
 
-els.amount.addEventListener('input', () => {
-  const amount = Number(els.amount.value) / 100;
-  els.amountValue.textContent = `${els.amount.value}%`;
-  toOffscreen({ type: 'set-params', amount });
-  chrome.storage.local.set({ amount });
-});
+function setAmount(value) {
+  renderAmount(value);
+  toOffscreen({ type: 'set-params', amount: value });
+  chrome.storage.local.set({ amount: value });
+}
+els.amount.addEventListener('input', () => setAmount(Number(els.amount.value) / 100));
+for (const b of els.presets) b.addEventListener('click', () => setAmount(Number(b.dataset.amount)));
+
+for (const b of els.viewButtons) {
+  b.addEventListener('click', () => {
+    if (view === b.dataset.view) return;
+    view = b.dataset.view;
+    chrome.storage.local.set({ view });
+    toOffscreen({ type: 'set-params', mode: activeMode() });
+    renderView();
+    render();
+    renderMode();
+    renderScan();
+    renderStats(lastStats);
+  });
+}
 
 function startLearning() {
   toOffscreen({ type: 'learn', seconds: LEARN_SECONDS });
@@ -406,7 +497,7 @@ els.forget.addEventListener('click', () => {
 // A/B comparison: while the button is held, play the original audio.
 function setBypassLabel() {
   els.compare.classList.toggle('held', bypassOn);
-  els.compare.textContent = t(bypassOn ? 'compare.held' : 'compare.hold');
+  els.compareText.textContent = t(bypassOn ? 'compare.held' : 'compare.hold');
 }
 function setBypass(on) {
   bypassOn = on;

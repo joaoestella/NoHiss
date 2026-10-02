@@ -3,7 +3,7 @@
 // "stream id" and hands it to the offscreen document, which does the rest.
 
 const OFFSCREEN_URL = 'offscreen/offscreen.html';
-const DEFAULTS = { mode: 'spectral', amount: 0.6, profile: null, scan: null, selection: [] };
+const DEFAULTS = { mode: 'spectral', amount: 0.6, profile: null, scan: null, selection: [], view: null };
 
 async function getActiveTabId() {
   const { activeTabId } = await chrome.storage.session.get('activeTabId');
@@ -58,12 +58,15 @@ async function startCapture(tabId) {
   const streamId = await chrome.tabCapture.getMediaStreamId({ targetTabId: tabId });
   await ensureOffscreenDocument();
 
-  const { mode, amount, profile, scan, selection } = await chrome.storage.local.get(DEFAULTS);
+  const { mode, amount, profile, scan, selection, view } = await chrome.storage.local.get(DEFAULTS);
+  // The Simple view always runs the automatic hiss filter; the filter picked
+  // in Pro is kept for when Pro is opened again. Same default as the popup.
+  const simple = (view ?? (mode !== 'spectral' || selection.length ? 'pro' : 'simple')) === 'simple';
   const result = await chrome.runtime.sendMessage({
     target: 'offscreen',
     type: 'start',
     streamId,
-    mode,
+    mode: simple ? 'spectral' : mode,
     amount,
     profile,
     scan,
