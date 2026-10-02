@@ -285,23 +285,32 @@ h1 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
 /* ---------- Simple: strength presets ---------- */
 
 .simple { margin-top: 10px; }
+.caption {
+  margin: 0 0 6px 2px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  user-select: none;
+}
 .presets {
   display: grid;
-  grid-template-columns: auto 1fr 1fr 1fr;
-  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 4px;
-  padding: 4px 4px 4px 12px;
+  padding: 4px;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 12px;
+  user-select: none;
 }
-.presets span { margin-inline-end: 6px; color: var(--muted); font-weight: 600; font-size: 12px; }
 .presets button {
-  padding: 7px 4px;
+  padding: 8px 4px;
   background: none;
   color: var(--muted);
   border-radius: 8px;
 }
+.presets button:hover { color: var(--text); }
 .presets button[aria-checked="true"] { background: var(--accent); color: var(--accent-ink); }
 
 .hold {
